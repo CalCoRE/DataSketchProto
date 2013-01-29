@@ -1,3 +1,50 @@
+//color picker
+var penColor="grey";
+
+function colorRed()
+{
+	penColor = "red";
+};
+
+function colorBlue()
+{
+	penColor = "blue";
+};
+
+function colorGreen()
+{
+	penColor = "green";
+};
+
+function colorYellow()
+{
+	penColor = "yellow";
+};
+
+function colorBlack()
+{
+	penColor = "black";
+};
+
+//pen thickness
+var penThickness= 10;
+
+function penThin()
+{
+	penThickness = 5;
+};
+
+function penRegular()
+{
+	penThickness = 10;
+};
+
+function penThick()
+{
+	penThickness = 20;
+};
+
+
 function buildPath( pointsArray ) {
 	var path = "";
 	for( i = 0 ; i < pointsArray.length; i++) {
@@ -118,6 +165,7 @@ window.onload = function(){
 	var selectedObject; // flag for whatever we're manipulating
 	var pointsRecorded;
 	var currentObject;
+	//var mouseOnSelectedObject = true;
   
   var stage = new Kinetic.Stage({
     container: "container",
@@ -126,28 +174,288 @@ window.onload = function(){
     listening: true
 	});
 
-  var objLayer = new Kinetic.Layer();
+var scrollstage = new Kinetic.Stage({
+	container: "container",
+	width: 500,
+	height: 500
+	});
 
+	var layer = new Kinetic.Layer();
+  	var objLayer = new Kinetic.Layer();
+  	
+  	var areas = new Kinetic.Group();
+    var scrollbars = new Kinetic.Group();
+  
+        var hscrollArea = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 30,
+        width: stage.getWidth() - 40,
+        height: 20,
+        fill: 'black',
+        opacity: 0.3
+      });
+
+      var hscroll = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 30,
+        width: 130,
+        height: 20,
+        fill: '#9f005b',
+        draggable: true,
+        dragBoundFunc: function(pos) {
+          var newX = pos.x;
+          if(newX < 10) {
+            newX = 10;
+          }
+          else if(newX > stage.getWidth() - 160) {
+            newX = stage.getWidth() - 160;
+          }
+          return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+          }
+        },
+        opacity: 0.9,
+        stroke: 'black',
+        strokeWidth: 1
+      });
+      
+    var hText = new Kinetic.Text({
+    	x: 375,
+   	 	y: stage.getHeight() - 30,
+    	text: 'Width',
+    	fontSize: 20,
+    	fontFamily: 'Calibri',
+    	textFill: 'black'
+	});
+      
+      
+      
+      
+        var hscrollArea2 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 60,
+        width: stage.getWidth() - 40,
+        height: 20,
+        fill: 'black',
+        opacity: 0.3
+      });
+
+      var hscroll2 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 60,
+        width: 130,
+        height: 20,
+        fill: '#9f005b',
+        draggable: true,
+        dragBoundFunc: function(pos) {
+          var newX = pos.x;
+          if(newX < 10) {
+            newX = 10;
+          }
+          else if(newX > stage.getWidth() - 160) {
+            newX = stage.getWidth() - 160;
+          }
+          return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+          }
+        },
+        opacity: 0.9,
+        stroke: 'black',
+        strokeWidth: 1
+      });
+      
+    var hText2 = new Kinetic.Text({
+    	x: 375,
+   	 	y: stage.getHeight() - 60,
+    	text: 'Height',
+    	fontSize: 20,
+    	fontFamily: 'Calibri',
+    	textFill: 'black'
+	});
+	
+	
+	    var hscrollArea3 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 90,
+        width: stage.getWidth() - 40,
+        height: 20,
+        fill: 'black',
+        opacity: 0.3
+      });
+
+      var hscroll3 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 90,
+        width: 130,
+        height: 20,
+        fill: '#9f005b',
+        draggable: true,
+        dragBoundFunc: function(pos) {
+          var newX = pos.x;
+          if(newX < 10) {
+            newX = 10;
+          }
+          else if(newX > stage.getWidth() - 160) {
+            newX = stage.getWidth() - 160;
+          }
+          return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+          }
+        },
+        opacity: 0.9,
+        stroke: 'black',
+        strokeWidth: 1
+      });
+      
+    var hText3 = new Kinetic.Text({
+    	x: 375,
+   	 	y: stage.getHeight() - 90,
+    	text: 'Opacity',
+    	fontSize: 20,
+    	fontFamily: 'Calibri',
+    	textFill: 'black'
+	});
+	
+	
+	var hscrollArea4 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 120,
+        width: stage.getWidth() - 40,
+        height: 20,
+        fill: 'black',
+        opacity: 0.3
+      });
+
+      var hscroll4 = new Kinetic.Rect({
+        x: 10,
+        y: stage.getHeight() - 120,
+        width: 130,
+        height: 20,
+        fill: '#9f005b',
+        draggable: true,
+        dragBoundFunc: function(pos) {
+          var newX = pos.x;
+          if(newX < 10) {
+            newX = 10;
+          }
+          else if(newX > stage.getWidth() - 160) {
+            newX = stage.getWidth() - 160;
+          }
+          return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+          }
+        },
+        opacity: 0.9,
+        stroke: 'black',
+        strokeWidth: 1
+      });
+      
+    var hText4 = new Kinetic.Text({
+    	x: 375,
+   	 	y: stage.getHeight() - 120,
+    	text: 'Rotation',
+    	fontSize: 20,
+    	fontFamily: 'Calibri',
+    	textFill: 'black'
+	});
+       
+      
+        var updateObjWidth = function() {
+        	var x = (hscroll.getPosition().x-10);
+        	//selectedObject.translate(stage.getWidth()/2, stage.getHeight()/2);
+			if (x < 20)
+        	{
+        	}
+        	else if (x < stage.getWidth() - 200)
+        	{
+        		selectedObject.setScale(x/100,1);
+        	}
+        	else
+        	{
+        		selectedObject.setScale(stage.getWidth() - 200,1);
+
+        	}
+      	};
+
+        var updateObjHeight = function() {
+        	var x = (hscroll2.getPosition().x-10);
+        	//selectedObject.translate(stage.getWidth()/2, stage.getHeight()/2);
+			if (x < 20)
+        	{
+        	}
+        	else if (x < stage.getWidth() - 200)
+        	{
+        		selectedObject.setScale(1,x/100);
+        	}
+        	else
+        	{
+        		selectedObject.setScale(1,stage.getWidth() - 200);
+
+	        }
+      	};
+      	
+      	 var updateObjOpacity = function() {
+        	var x = (hscroll3.getPosition().x-10);
+			if (x < 20)
+        	{
+        	}
+        	else if (x < stage.getWidth() - 200)
+        	{
+        		selectedObject.setOpacity(x/1000);
+        	}
+        	else
+        	{
+        		selectedObject.setOpacity((stage.getWidth() - 200)/10);
+
+	        }
+      	};
+      	
+      	 var updateObjRotation = function() {
+        	var x = (hscroll4.getPosition().x-10);
+			if (x < 20)
+        	{
+        	}
+        	else if (x < stage.getWidth() - 200)
+        	{
+        		selectedObject.rotate(x/1000);
+        	}
+        	else
+        	{
+        		selectedObject.setOpacity((stage.getWidth() - 200)/10);
+
+	        }
+      	};
+
+	
+	scrollbars.on('mouseover', function() {
+        document.body.style.cursor = 'pointer';
+      });
+      scrollbars.on('mouseout', function() {
+        document.body.style.cursor = 'default';
+      });
+
+      hscroll.on('dragmove', updateObjWidth);
+      hscroll2.on('dragmove', updateObjHeight);
+      hscroll3.on('dragmove', updateObjOpacity);
+      hscroll4.on('dragmove', updateObjRotation);
 
   var activePath = new Kinetic.Path({
     x: 0,
     y: 0,
     data: undefined,
-    stroke: 'green',
+    stroke: penColor,
     scale: 1,
-    strokeWidth: 10,
+    strokeWidth: penThickness,
   });
   
-  stage.getContainer().addEventListener("dblclick dbltap", function(){
-				if(selectedObject !== undefined) {
-					selectedObject.setStroke('grey');
-					selectedObject = undefined;
-				};
-				output.innerHTML = "you dblclicked outside";
-			});
+
+
 
   
-  /// START DEFINING THE PATH USING MOUSE EVENTS
   // if a touchdown happens on an *object*, store it as target and ignore the rest
   stage.getContainer().addEventListener("mousedown", function() {
 	  if( draggedObject === undefined ) {
@@ -162,7 +470,6 @@ window.onload = function(){
   	objLayer.draw();
   });
   
-  // WHILE I'M STILL DRAGGING...
   // if there's not a target then do this.
   stage.getContainer().addEventListener("mousemove", function(touchEvt) {
 		if( currentObject !== undefined ) {
@@ -173,45 +480,76 @@ window.onload = function(){
 	    	drawnObjects[currentObject].push( mousePos.x + "," + mousePos.y ); // the moveTo points	
 	    }
 	  	activePath.setData( parsePath( drawnObjects[currentObject].toString() ) ); // update the active path
-	  	activePath.setStroke('green');  	
+	  	activePath.setStroke(penColor);
+	  	activePath.setStrokeWidth(penThickness);  	
 	  }
   	objLayer.draw();
   	pointsRecorded++; // eventually for smoothing
   });
   
   stage.getContainer().addEventListener("mouseup", function(touchEvt) {
+  
+  
 		if( currentObject !== undefined ) {
-	  	output.innerHTML = drawnObjects[currentObject].toString(); // debug
-	  	output.innerHTML = drawnObjects[currentObject].toString(); // debug
+	  	//output.innerHTML = drawnObjects[currentObject].toString(); // debug
+	  	//output.innerHTML = drawnObjects[currentObject].toString(); // debug
 	  	
-	  	//this is pushing to an array… you just need the new kinetic.path stuff inside
 	  	objectCollection.push(
 				new Kinetic.Path({ x: activePath.getX(),
 	    		                 y: activePath.getY(),
 	    										 data: activePath.getData(),
-	    										 stroke: 'grey',
-	    										 strokeWidth: 10,
+	    										 stroke: penColor,
+	    										 strokeWidth: penThickness,
 	    										 draggable: true
 	  		})
 			);
 			
-			// END OF RELEVANT STUFF
-			
-			// NONE OF THIS IS IMPORTANT FOR DEFINING THE SHAPE
 			// when an object is double clicked, call it 'selected' and make it listen to sliders however
+			// double click on the object to deselect 
 			objectCollection[objectCollection.length - 1].on("dblclick dbltap", function(){
 				if(selectedObject === undefined) {
 					selectedObject = this;
-					this.setStroke('red');
-					this.setRotationDeg(30);
-					this.setScale(2,1);
+					this.setOpacity(0.5);
+					//this.setScale(2,1);
 				} else { 
+					this.setOpacity(1);
 					selectedObject = undefined;
-					this.setStroke('grey');
 				};
-				output.innerHTML = "you dblclicked";
 			});
 			
+// all of this code was an attempt to deselect object when doubleclick anywhere on stage
+ 
+// 	if(selectedObject !== undefined)
+// 	{
+//       selectedObject.on("mouseover", function() {
+//         mouseOnSelectedObject = true;
+//         output.innerHTML = "on object";
+//       });
+//       selectedObject.on("mouseout", function() {
+//         mouseOnSelectedObject = false;
+//      	output.innerHTML = "not on object";
+//       });
+// 	}
+// 		
+//   // "dblclick dbltap" not working and not sure why...
+//   // need to find a way to recognize a doubleclick on stage or object but not on selected object
+//   stage.getContainer().addEventListener("dblclick", function(){
+//   		//alert(selectedObject);
+// 				if(selectedObject !== undefined) {
+// 					if(!mouseOnSelectedObject){
+// 					alert("you turned off");
+// 					selectedObject.setStroke('grey');
+// 					selectedObject = undefined;
+// 					output.innerHTML = "you dblclicked outside";
+// 					}
+// 				}
+// 				
+// 
+// 				//alert(2);
+// 			});
+
+
+	
 			objectCollection[objectCollection.length - 1].on("mouseover", function(){
 				draggedObject = this;
 			});
@@ -237,10 +575,32 @@ window.onload = function(){
   
   //path.data = parsePath(data);
 
+
+      areas.add(hscrollArea);
+      scrollbars.add(hscroll);
+      scrollbars.add(hText);
+      
+      areas.add(hscrollArea2);
+      scrollbars.add(hscroll2);
+      scrollbars.add(hText2);
+      
+      areas.add(hscrollArea3);
+      scrollbars.add(hscroll3);
+      scrollbars.add(hText3);
+      
+      areas.add(hscrollArea4);
+      scrollbars.add(hscroll4);
+      scrollbars.add(hText4);      
+      
+      layer.add(areas);
+      layer.add(scrollbars);
   // add the shape to the layer
   objLayer.add(activePath);
+  layer.add(hscrollArea);
+  layer.add(hscroll);
 
   // add the layer to the stage
+  scrollstage.add(layer);
   stage.add(objLayer);
 }
 
