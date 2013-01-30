@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html debug="true">
+<meta charset="UTF-8">
+<head>
+    <script src="http://kineticjs.com/download/v4.0.5/kinetic-v4.0.5.js"></script>
+    <script src="dynink.js"></script>
+    <script src="buttons.js"></script>
+    <script src="utilities.js"></script>
+    <script src="scrollbars.js"></script>
+    <script src="drawing.js"></script>
+</head>
+<body>
+  <script>
+		var penColor = "grey";
+		var penThickness= 10;
+		var selectedObject;
+		
+	</script>
+
+
+	 <button onclick="colorRed(penColor)" >Red</button>
+	 <button onclick="colorBlue(penColor)" >Blue</button>
+	 <button onclick="colorGreen(penColor)" >Green</button>
+	 <button onclick="colorYellow(penColor)" >Yellow</button>
+	 <button onclick="colorBlack(penColor)" >Black</button>
+	 <button onclick="penThin(penThickness)" >Thin</button>
+	 <button onclick="penRegular(penThickness)" >Regular</button>
+	 <button onclick="penThick(penThickness)" >Thick</button>
+    <div id="container"></div>
+    <div id="output">
+    </div>
+    
+</body>
+</html>
