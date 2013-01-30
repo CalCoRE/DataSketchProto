@@ -1,0 +1,283 @@
+var hscroll;
+var hscroll2;
+var hscroll3;
+var hscroll4;
+
+function makeScrollbars(scrollstage){
+
+var layer = new Kinetic.Layer();
+
+var areas = new Kinetic.Group();
+var scrollbars = new Kinetic.Group();
+  
+var hscrollArea = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 30,
+    width: scrollstage.getWidth() - 40,
+    height: 20,
+    fill: 'black',
+    opacity: 0.3
+});
+
+ hscroll = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 30,
+    width: 130,
+    height: 20,
+    fill: '#9f005b',
+    draggable: true,
+    dragBoundFunc: function(pos) {
+      var newX = pos.x;
+        if(newX < 10) {
+            newX = 10;
+        }
+        else if(newX > scrollstage.getWidth() - 160) {
+            newX = scrollstage.getWidth() - 160;
+        }
+        return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+        }
+    },
+    opacity: 0.9,
+    stroke: 'black',
+    strokeWidth: 1
+});
+      
+var hText = new Kinetic.Text({
+    x: 375,
+   	y: scrollstage.getHeight() - 30,
+    text: 'Width',
+    fontSize: 20,
+    fontFamily: 'Calibri',
+    textFill: 'black'
+});
+      
+      
+var hscrollArea2 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 60,
+    width: scrollstage.getWidth() - 40,
+    height: 20,
+    fill: 'black',
+    opacity: 0.3
+});
+
+ hscroll2 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 60,
+    width: 130,
+    height: 20,
+    fill: '#9f005b',
+    draggable: true,
+    dragBoundFunc: function(pos) {
+        var newX = pos.x;
+        if(newX < 10) {
+        	newX = 10;
+        }
+        else if(newX > scrollstage.getWidth() - 160) {
+            newX = scrollstage.getWidth() - 160;
+        }
+        return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+        }
+    },
+    opacity: 0.9,
+    stroke: 'black',
+    strokeWidth: 1
+});
+      
+var hText2 = new Kinetic.Text({
+    x: 375,
+   	y: scrollstage.getHeight() - 60,
+    text: 'Height',
+    fontSize: 20,
+    fontFamily: 'Calibri',
+    textFill: 'black'
+});
+	
+	
+var hscrollArea3 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 90,
+    width: scrollstage.getWidth() - 40,
+    height: 20,
+    fill: 'black',
+    opacity: 0.3
+});
+
+ hscroll3 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 90,
+    width: 130,
+    height: 20,
+    fill: '#9f005b',
+    draggable: true,
+    dragBoundFunc: function(pos) {
+        var newX = pos.x;
+        if(newX < 10) {
+            newX = 10;
+        }
+        else if(newX > scrollstage.getWidth() - 160) {
+            newX = scrollstage.getWidth() - 160;
+        }
+        return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+        }
+    },
+	opacity: 0.9,
+    stroke: 'black',
+    strokeWidth: 1
+});
+      
+var hText3 = new Kinetic.Text({
+    x: 375,
+   	y: scrollstage.getHeight() - 90,
+    text: 'Opacity',
+    fontSize: 20,
+    fontFamily: 'Calibri',
+    textFill: 'black'
+});
+	
+	
+var hscrollArea4 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 120,
+    width: scrollstage.getWidth() - 40,
+    height: 20,
+    fill: 'black',
+    opacity: 0.3
+});
+
+ hscroll4 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 120,
+    width: 130,
+    height: 20,
+    fill: '#9f005b',
+    draggable: true,
+    dragBoundFunc: function(pos) {
+        var newX = pos.x;
+        if(newX < 10) {
+            newX = 10;
+        }
+        else if(newX > scrollstage.getWidth() - 160) {
+            newX = scrollstage.getWidth() - 160;
+        }
+        return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+        }
+    },
+    opacity: 0.9,
+    stroke: 'black',
+    strokeWidth: 1
+});
+      
+var hText4 = new Kinetic.Text({
+    x: 375,
+   	y: scrollstage.getHeight() - 120,
+    text: 'Rotation',
+    fontSize: 20,
+    fontFamily: 'Calibri',
+    textFill: 'black'
+});
+
+scrollbars.on('mouseover', function() {
+    document.body.style.cursor = 'pointer';
+});
+scrollbars.on('mouseout', function() {
+    document.body.style.cursor = 'default';
+});
+
+areas.add(hscrollArea);
+scrollbars.add(hscroll);
+scrollbars.add(hText);
+      
+areas.add(hscrollArea2);
+scrollbars.add(hscroll2);
+scrollbars.add(hText2);
+      
+areas.add(hscrollArea3);
+scrollbars.add(hscroll3);
+scrollbars.add(hText3);
+      
+areas.add(hscrollArea4);
+scrollbars.add(hscroll4);
+scrollbars.add(hText4);      
+      
+layer.add(areas);
+layer.add(scrollbars);
+scrollstage.add(layer);
+
+hscroll.on('dragmove', updateObjWidth);
+hscroll2.on('dragmove', updateObjHeight);
+hscroll3.on('dragmove', updateObjOpacity);
+hscroll4.on('dragmove', updateObjRotation);
+
+};
+
+        
+var updateObjWidth = function() {
+    var x = (hscroll.getPosition().x-10);
+	if (x < 20)
+    {
+    }
+    else if (x < 300)
+    {
+        selectedObject.setScale(x/100,1);
+    }
+    else
+    {
+    	selectedObject.setScale(300,1);
+    }
+};
+
+var updateObjHeight = function() {
+	var x = (hscroll2.getPosition().x-10);
+	if (x < 20)
+    {
+    }
+    else if (x < 300)
+    {
+    	selectedObject.setScale(1,x/100);
+    }
+    else
+    {
+        selectedObject.setScale(1,300);
+	}
+};
+      	
+var updateObjOpacity = function() {
+    var x = (hscroll3.getPosition().x-10);
+	if (x < 20)
+    {
+        	selectedObject.setOpacity(0.5);
+    }
+    else if (x < 300)
+    {
+    	selectedObject.setOpacity(x/1000);
+    }
+    else
+    {
+        selectedObject.setOpacity(3);
+	}
+};
+      	
+var updateObjRotation = function() {
+    var x = (hscroll4.getPosition().x-10);
+	if (x < 20)
+    {
+    }
+	else if (x < 300)
+    {
+        selectedObject.rotate(x/1000);
+    }
+    else
+    {
+        selectedObject.rotate(30);
+    }
+};
+
