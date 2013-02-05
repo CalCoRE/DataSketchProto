@@ -27,7 +27,7 @@ var hscrollArea = new Kinetic.Rect({
     fill: '#9f005b',
     draggable: true,
     dragBoundFunc: function(pos) {
-      var newX = pos.x;
+    	var newX = pos.x;
         if(newX < 10) {
             newX = 10;
         }
@@ -192,6 +192,8 @@ scrollbars.on('mouseout', function() {
     document.body.style.cursor = 'default';
 });
 
+
+
 areas.add(hscrollArea);
 scrollbars.add(hscroll);
 scrollbars.add(hText);
@@ -219,8 +221,9 @@ hscroll4.on('dragmove', updateObjRotation);
 
 };
 
-        
+       
 var updateObjWidth = function() {
+
     var x = (hscroll.getPosition().x-10);
 	if (x < 20)
     {
@@ -280,4 +283,3 @@ var updateObjRotation = function() {
         selectedObject.rotate(30);
     }
 };
-
