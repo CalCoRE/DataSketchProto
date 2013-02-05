@@ -14,18 +14,24 @@ var activePath = new Kinetic.Path({
     data: undefined,
     stroke: penColor,
     scale: 1,
-    strokeWidth: penThickness,
+    strokeWidth: penThickness
 });
 
-
+//alert(activePath.rawX); //this is promising maybe
 var objectCollection = [];
+var rawX = [];
+var rawY = [];
+var pathXmin;
+var pathXmax;
+var pathYmin;
+var pathYmax;
 
 var drawnObjects = []; // array of drawn object coordinates to create paths
 
   
 // if a touchdown happens on an *object*, store it as target and ignore the rest
 stage.getContainer().addEventListener("mousedown", function() {
-  if( draggedObject === undefined ) {
+	if( draggedObject === undefined ) {
 		//activePath.setData('');
 	    var mousePos = stage.getMousePosition();
 	  	currentObject = drawnObjects.length; // next object index
@@ -41,11 +47,13 @@ stage.getContainer().addEventListener("mousemove", function(touchEvt) {
 	if( currentObject !== undefined ) {
 	    var mousePos = stage.getMousePosition();
 	    if( pointsRecorded == 1 ) { // if it's the first point put the R
-	    	drawnObjects[currentObject].push("R"+ mousePos.x + "," + mousePos.y ); // the moveTo points	
+	    	drawnObjects[currentObject].push("R"+ mousePos.x + "," + mousePos.y ); // the moveTo points
 	    } 
 	    else { // otherwise don't need it
 	    	drawnObjects[currentObject].push( mousePos.x + "," + mousePos.y ); // the moveTo points	
 	    }
+	    rawX[pointsRecorded-1]=mousePos.x;
+	    rawY[pointsRecorded-1]=mousePos.y;
 	  	activePath.setData( parsePath( drawnObjects[currentObject].toString() ) ); // update the active path
 	  	activePath.setStroke(penColor);
 	  	activePath.setStrokeWidth(penThickness);  	
@@ -74,10 +82,11 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 				if(selectedObject === undefined) {
 					selectedObject = this;
 					this.setFill('red');
-					this.setOffset([this.getWidth()/2, this.getHeight()/2]);
-					//var test = selectedObject.getHeight();
-	  				//alert(test);
-	  				//useScrollbars();
+					pathXmin = Math.min.apply(null, rawX);
+					pathXmax = Math.max.apply(null, rawX);
+					pathYmin = Math.min.apply(null, rawY);
+					pathYmax = Math.max.apply(null, rawY);
+ 					this.setOffset([(pathXmax-pathXmin)/2, (pathYmax-pathYmin)/2]);
 				} 
 				else 
 				{ 
@@ -104,8 +113,5 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 });
 objLayer.add(activePath);
 stage.add(objLayer);
-
-//alert(selectedObject);
-//return selectedObject;
 
 };
