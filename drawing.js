@@ -14,13 +14,12 @@ var activePath = new Kinetic.Path({
     data: undefined,
     stroke: penColor,
     scale: 1,
-    strokeWidth: penThickness
+    strokeWidth: penThickness,
 });
 
-//alert(activePath.rawX); //this is promising maybe
+activePath.rawX=[];
+activePath.rawY=[];
 var objectCollection = [];
-var rawX = [];
-var rawY = [];
 var pathXmin;
 var pathXmax;
 var pathYmin;
@@ -52,8 +51,9 @@ stage.getContainer().addEventListener("mousemove", function(touchEvt) {
 	    else { // otherwise don't need it
 	    	drawnObjects[currentObject].push( mousePos.x + "," + mousePos.y ); // the moveTo points	
 	    }
-	    rawX[pointsRecorded-1]=mousePos.x;
-	    rawY[pointsRecorded-1]=mousePos.y;
+	    //is there a way to store this inside each path? otherwise need different way of storing
+	    activePath.rawX[pointsRecorded-1]=mousePos.x;
+	    activePath.rawY[pointsRecorded-1]=mousePos.y;
 	  	activePath.setData( parsePath( drawnObjects[currentObject].toString() ) ); // update the active path
 	  	activePath.setStroke(penColor);
 	  	activePath.setStrokeWidth(penThickness);  	
@@ -74,18 +74,23 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 	    			strokeWidth: penThickness,
 	    			draggable: true
 	  			})
+
 			);
+			objectCollection[objectCollection.length - 1].rawX=activePath.rawX;
+			objectCollection[objectCollection.length - 1].rawY=activePath.rawY;
 			
 			// when an object is double clicked, call it 'selected' and make it listen to sliders however
 			// double click on the object to deselect 
 			objectCollection[objectCollection.length - 1].on("dblclick dbltap", function(){
 				if(selectedObject === undefined) {
 					selectedObject = this;
+					//alert(selectedObject.rawX);
 					this.setFill('red');
-					pathXmin = Math.min.apply(null, rawX);
-					pathXmax = Math.max.apply(null, rawX);
-					pathYmin = Math.min.apply(null, rawY);
-					pathYmax = Math.max.apply(null, rawY);
+					//finding max and min values of an array
+					pathXmin = Math.min.apply(null, activePath.rawX);
+					pathXmax = Math.max.apply(null, activePath.rawX);
+					pathYmin = Math.min.apply(null, activePath.rawY);
+					pathYmax = Math.max.apply(null, activePath.rawY);	
  					this.setOffset([(pathXmax-pathXmin)/2, (pathYmax-pathYmin)/2]);
 				} 
 				else 
