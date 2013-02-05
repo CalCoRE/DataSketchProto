@@ -8,24 +8,26 @@
     <script src="utilities.js"></script>
     <script src="scrollbars.js"></script>
     <script src="drawing.js"></script>
+    <script src="pathbbox.js"></script>
 </head>
 <body>
-  <script>
+	<script>
 		var penColor = "grey";
 		var penThickness= 10;
 		var selectedObject;
 		
 	</script>
 
-
-	 <button onclick="colorRed(penColor)" >Red</button>
-	 <button onclick="colorBlue(penColor)" >Blue</button>
-	 <button onclick="colorGreen(penColor)" >Green</button>
-	 <button onclick="colorYellow(penColor)" >Yellow</button>
-	 <button onclick="colorBlack(penColor)" >Black</button>
-	 <button onclick="penThin(penThickness)" >Thin</button>
-	 <button onclick="penRegular(penThickness)" >Regular</button>
-	 <button onclick="penThick(penThickness)" >Thick</button>
+	Pen Color:
+	 <button style="background-color:red;height: 25px; width: 25px" onclick="colorRed(penColor)" ></button>
+	 <button style="background-color:blue;height: 25px; width: 25px" onclick="colorBlue(penColor)" ></button>
+	 <button style="background-color:green;height: 25px; width: 25px" onclick="colorGreen(penColor)" ></button>
+	 <button style="background-color:yellow;height: 25px; width: 25px" onclick="colorYellow(penColor)" ></button>
+	 <button style="background-color:black;height: 25px; width: 25px" onclick="colorBlack(penColor)" ></button><br><br>
+	 Pen Thickness:
+	 <button style="background-color:grey;height: 5px; width: 25px" onclick="penThin(penThickness)" ></button>
+	 <button style="background-color:grey;height: 12px; width: 25px" onclick="penRegular(penThickness)" ></button>
+	 <button style="background-color:grey;height: 20px; width: 25px" onclick="penThick(penThickness)" ></button>
     <div id="container"></div>
     <div id="output">
     </div>
