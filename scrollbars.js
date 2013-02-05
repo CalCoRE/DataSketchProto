@@ -2,6 +2,7 @@ var hscroll;
 var hscroll2;
 var hscroll3;
 var hscroll4;
+var hscroll5;
 
 function makeScrollbars(scrollstage){
 
@@ -185,6 +186,49 @@ var hText4 = new Kinetic.Text({
     textFill: 'black'
 });
 
+var hscrollArea5 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 150,
+    width: scrollstage.getWidth() - 40,
+    height: 20,
+    fill: 'black',
+    opacity: 0.3
+});
+
+ hscroll5 = new Kinetic.Rect({
+    x: 10,
+    y: scrollstage.getHeight() - 150,
+    width: 130,
+    height: 20,
+    fill: '#9f005b',
+    draggable: true,
+    dragBoundFunc: function(pos) {
+        var newX = pos.x;
+        if(newX < 10) {
+            newX = 10;
+        }
+        else if(newX > scrollstage.getWidth() - 160) {
+            newX = scrollstage.getWidth() - 160;
+        }
+        return {
+            x: newX,
+            y: this.getAbsolutePosition().y
+        }
+    },
+    opacity: 0.9,
+    stroke: 'black',
+    strokeWidth: 1
+});
+      
+var hText5 = new Kinetic.Text({
+    x: 375,
+   	y: scrollstage.getHeight() - 150,
+    text: 'Skins',
+    fontSize: 20,
+    fontFamily: 'Calibri',
+    textFill: 'black'
+});
+
 scrollbars.on('mouseover', function() {
     document.body.style.cursor = 'pointer';
 });
@@ -208,7 +252,11 @@ scrollbars.add(hText3);
       
 areas.add(hscrollArea4);
 scrollbars.add(hscroll4);
-scrollbars.add(hText4);      
+scrollbars.add(hText4);   
+
+areas.add(hscrollArea5);
+scrollbars.add(hscroll5);
+scrollbars.add(hText5);       
       
 layer.add(areas);
 layer.add(scrollbars);
@@ -218,6 +266,7 @@ hscroll.on('dragmove', updateObjWidth);
 hscroll2.on('dragmove', updateObjHeight);
 hscroll3.on('dragmove', updateObjOpacity);
 hscroll4.on('dragmove', updateObjRotation);
+hscroll5.on('dragmove', updateObjSkin);
 
 };
 
@@ -283,3 +332,23 @@ var updateObjRotation = function() {
         selectedObject.rotate(30);
     }
 };
+
+var updateObjSkin = function() {
+    var x = (hscroll5.getPosition().x-10);
+	if (x < 20)
+    {
+    }
+	else if (x < 300)
+    {
+    	if(selectedObject.skin !== undefined){
+        	selectedObject.setData() = selectedObject.skin;
+        }
+    }
+    else
+    {
+		if(selectedObject.skin2 !== undefined){
+        	selectedObject.data = selectedObject.skin2;
+        }
+    }
+};
+

@@ -31,6 +31,7 @@ var drawnObjects = []; // array of drawn object coordinates to create paths
 // if a touchdown happens on an *object*, store it as target and ignore the rest
 stage.getContainer().addEventListener("mousedown", function() {
 	if( draggedObject === undefined ) {
+		//choose if you want a new object or just a new skin
 		//activePath.setData('');
 	    var mousePos = stage.getMousePosition();
 	  	currentObject = drawnObjects.length; // next object index
@@ -64,12 +65,12 @@ stage.getContainer().addEventListener("mousemove", function(touchEvt) {
   
 stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 		if(currentObject !== undefined) {
+			if(selectedObject === undefined){
 	  		objectCollection.push(
 				new Kinetic.Path({ 
 					x: activePath.getX(),
 	    		    y: activePath.getY(),
 	    			data: activePath.getData(),
-	    			offset:[activePath.getWidth()/2, activePath.getHeight()/2],
 	    			stroke: penColor,
 	    			strokeWidth: penThickness,
 	    			draggable: true
@@ -78,14 +79,19 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 			);
 			objectCollection[objectCollection.length - 1].rawX=activePath.rawX;
 			objectCollection[objectCollection.length - 1].rawY=activePath.rawY;
-			
+			}
+			else{
+				//new skin
+				selectedObject.skin = activePath.getData();
+			}	
+		
 			// when an object is double clicked, call it 'selected' and make it listen to sliders however
 			// double click on the object to deselect 
 			objectCollection[objectCollection.length - 1].on("dblclick dbltap", function(){
 				if(selectedObject === undefined) {
 					selectedObject = this;
 					//alert(selectedObject.rawX);
-					this.setFill('red');
+					this.setStroke('#7D2252');
 					//finding max and min values of an array
 					pathXmin = Math.min.apply(null, activePath.rawX);
 					pathXmax = Math.max.apply(null, activePath.rawX);
@@ -95,7 +101,7 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 				} 
 				else 
 				{ 
-					this.setFill('');
+					this.setStroke(penColor);
 					selectedObject = undefined;
 				};
 			});
