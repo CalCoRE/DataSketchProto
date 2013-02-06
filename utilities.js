@@ -10,6 +10,51 @@ function buildPath( pointsArray ) {
 	}
 }
 
+function buildPathFromRaw( xArray , yArray ) {
+	var path = "";
+	for( i = 0 ; i < xArray.length; i++) {
+		xPoint = xArray[i];
+		yPoint = yArray[i];
+		if( i == 0 ) {
+			path += "M" + xPoint + "," + yPoint;
+		} else if( i == 1 ) {
+			path += "R" + xPoint + "," + yPoint;
+		} else {
+			path += xPoint + "," + yPoint;
+		}
+	}
+	return path;
+}
+
+function getNormalized( xArray , yArray ) {
+	
+	xmin = Math.min.apply(null, xArray);
+	xmax = Math.max.apply(null, xArray);
+	ymin = Math.min.apply(null, yArray);
+	ymax = Math.max.apply(null, yArray);
+	
+	distX = ( xmax - xmin );
+	distY = ( ymax - ymin );
+
+	offsetX = distX / 2 + xmin;
+	offsetY = distY / 2 + ymin;
+	
+	// move to center
+	
+	
+	// shrink to unit 1
+	
+	
+	//return normalized points, distances, and offsets
+	returnData = [ xArray.map(function(x) {return x - offsetX}) , yArray.map(function(y) {return y - offsetY}) , offsetX , offsetY ];
+	
+	return returnData;
+}
+
+function changeWidth( xArray, yArray ) {
+	
+}
+
 function parsePath( data ) {
   var pathArray = [];
   var lastX = "";

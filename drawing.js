@@ -30,13 +30,15 @@ var drawnObjects = []; // array of drawn object coordinates to create paths
   
 // if a touchdown happens on an *object*, store it as target and ignore the rest
 stage.getContainer().addEventListener("mousedown", function() {
-	if( draggedObject === undefined ) {
+	if( selectedObject === undefined && draggedObject === undefined ) {
 		//choose if you want a new object or just a new skin
 		//activePath.setData('');
 	    var mousePos = stage.getMousePosition();
 	  	currentObject = drawnObjects.length; // next object index
 	    drawnObjects[currentObject] = []; // new data array for path
 	  	drawnObjects[currentObject].push("M"+ mousePos.x + "," + mousePos.y ); // the moveTo points
+	    //activePath.rawX[0]=mousePos.x;
+	    //activePath.rawY[0]=mousePos.y;
   		pointsRecorded = 1; // eventually use this to smooth
   	}
   	objLayer.draw();
@@ -44,7 +46,7 @@ stage.getContainer().addEventListener("mousedown", function() {
   
 // if there's not a target then do this.
 stage.getContainer().addEventListener("mousemove", function(touchEvt) {
-	if( currentObject !== undefined ) {
+	if( selectedObject === undefined && currentObject !== undefined ) {
 	    var mousePos = stage.getMousePosition();
 	    if( pointsRecorded == 1 ) { // if it's the first point put the R
 	    	drawnObjects[currentObject].push("R"+ mousePos.x + "," + mousePos.y ); // the moveTo points
@@ -53,8 +55,8 @@ stage.getContainer().addEventListener("mousemove", function(touchEvt) {
 	    	drawnObjects[currentObject].push( mousePos.x + "," + mousePos.y ); // the moveTo points	
 	    }
 	    //is there a way to store this inside each path? otherwise need different way of storing
-	    activePath.rawX[pointsRecorded-1]=mousePos.x;
-	    activePath.rawY[pointsRecorded-1]=mousePos.y;
+	    activePath.rawX[pointsRecorded]=mousePos.x;
+	    activePath.rawY[pointsRecorded]=mousePos.y;
 	  	activePath.setData( parsePath( drawnObjects[currentObject].toString() ) ); // update the active path
 	  	activePath.setStroke(penColor);
 	  	activePath.setStrokeWidth(penThickness);  	
@@ -64,7 +66,7 @@ stage.getContainer().addEventListener("mousemove", function(touchEvt) {
 });
   
 stage.getContainer().addEventListener("mouseup", function(touchEvt) {
-		if(currentObject !== undefined) {
+		if(selectedObject === undefined && currentObject !== undefined) {
 			if(selectedObject === undefined){
 	  		objectCollection.push(
 				new Kinetic.Path({ 
@@ -79,6 +81,7 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 			);
 			objectCollection[objectCollection.length - 1].rawX=activePath.rawX;
 			objectCollection[objectCollection.length - 1].rawY=activePath.rawY;
+			objectCollection[objectCollection.length - 1].rawData=drawnObjects[currentObject];
 			}
 			else{
 				//new skin
@@ -97,7 +100,8 @@ stage.getContainer().addEventListener("mouseup", function(touchEvt) {
 					pathXmax = Math.max.apply(null, activePath.rawX);
 					pathYmin = Math.min.apply(null, activePath.rawY);
 					pathYmax = Math.max.apply(null, activePath.rawY);	
- 					this.setOffset([(pathXmax-pathXmin)/2, (pathYmax-pathYmin)/2]);
+ 					//this.setOffset([(pathXmax-pathXmin)/2, (pathYmax-pathYmin)/2]);
+ 					//updateObjWidth();
 				} 
 				else 
 				{ 

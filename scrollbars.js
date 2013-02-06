@@ -270,6 +270,28 @@ hscroll5.on('dragmove', updateObjSkin);
 
 };
 
+changeWidth = function(obj, widthScale) {
+					//alert("raw data orig " + obj.rawData);
+					//alert("raw data x " + obj.rawX);
+					//alert("prased data orig " + obj.getData());
+					normed = getNormalized( obj.rawX , obj.rawY );
+					//alert("nromed x " + normed[0]);
+				  Xpoints = normed[0].map(function(x) {return x * widthScale}); // scale appropriately
+					obj.rawX = Xpoints.map(function(x) {return x + normed[2]}); // move back to original center
+					
+					//alert("first getdata " + obj.getData());
+					pathFromRaw = buildPathFromRaw( obj.rawX, obj.rawY );
+					//alert("path from raw " + pathFromRaw.toString());
+					
+					parsedPath = parsePath( pathFromRaw );
+					//alert("from object " + obj.getData());
+					//alert("from parsedPath " + parsedPath);
+					//alert()
+					obj.setData( parsedPath );
+					//alert(obj.getData().toString());
+					//obj.draw();
+						
+}
        
 var updateObjWidth = function() {
 
@@ -279,7 +301,8 @@ var updateObjWidth = function() {
     }
     else if (x < 300)
     {
-        selectedObject.setScale(x/100,1);
+        //selectedObject.setScale(x/100,1);
+        changeWidth(selectedObject, x/100);
     }
     else
     {
