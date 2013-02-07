@@ -158,3 +158,46 @@ VectorEditor.prototype.resize = function(object, width, height, x, y){
   }
 }
 
+
+changeWidth = function(value){
+  if(editor.selected[0] != undefined){
+	//editor.selected[0].attr({height:editor.selected[0].getBBox().height});
+	var box = editor.selected[0].getBBox();
+	var x = box.width;
+	var y = box.height;
+	var p = value/100;
+	var xp = box.x +x/2;
+    var yp = box.y +y/2;
+	editor.selected[0].scale(p,1,xp,yp);
+	//resize();
+	}
+	
+}
+
+changeHeight = function(value){
+	if(editor.selected[0] != undefined){
+	var box = editor.selected[0].getBBox();
+	var x = box.width;
+	var y = box.height;
+	var p = value/100;
+	var xp = box.x +x/2;
+    var yp = box.y +y/2;
+    //alert(box.height)
+	editor.selected[0].scale(1,p,xp,yp);
+	//resize();
+	}
+}
+
+changeOpacity = function(value){
+	if(editor.selected[0] != undefined){
+	editor.selected[0].attr({opacity:value/100});
+	}
+}
+
+
+resize = function(){
+
+//updates path attributes
+	var box = editor.selected[0].getBBox();
+	editor.selected[0].attr({height:box.height});
+}
