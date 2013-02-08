@@ -66,7 +66,7 @@ VectorEditor.prototype.addShape = function(shape,no_select, no_fire){
 }
 
 VectorEditor.prototype.rectsIntersect = function(r1, r2) {
-  return r2.x < (r1.x+r1.width) && 
+  return r2.x < (r1.x+r1.width) &&
           (r2.x+r2.width) > r1.x &&
           r2.y < (r1.y+r1.height) &&
           (r2.y+r2.height) > r1.y;
@@ -80,7 +80,7 @@ VectorEditor.prototype.move = function(shape, x, y){
   //HACKITY HACK HACK
   //var rot = null;
   //if(shape._ && shape._.rt){
-  //  rot = shape._.rt.deg
+  // rot = shape._.rt.deg
   //}
   
   //<here's the part that isn't a hack>
@@ -89,10 +89,10 @@ VectorEditor.prototype.move = function(shape, x, y){
   
   //HACKITY HACK HACK
   //if(rot){
-  //  shape.rotate(rot,true)//absolutelyness
+  // shape.rotate(rot,true)//absolutelyness
   //}
   //if(shape._ && shape._.rt){
-  //  shape.rotate(shape._.rt.deg, true)
+  // shape.rotate(shape._.rt.deg, true)
   //}
 }
 
@@ -126,41 +126,40 @@ VectorEditor.prototype.fixText = function(str){
 }
 
 VectorEditor.prototype.resize = function(object, width, height, x, y){
-  if(object.type == "rect" || object.type == "image"){
-    if(width > 0){
-      object.attr("width", width)
-    }else{
-      object.attr("x", (x?x:object.attr("x"))+width)
-      object.attr("width", Math.abs(width)) 
-    }
-    if(height > 0){
-      object.attr("height", height)
-    }else{
-      object.attr("y", (y?y:object.attr("y"))+height)
-      object.attr("height", Math.abs(height)) 
-    }
-  }else if(object.type == "ellipse"){
-    if(width > 0){
-      object.attr("rx", width)
-    }else{
-      object.attr("x", (x?x:object.attr("x"))+width)
-      object.attr("rx", Math.abs(width)) 
-    }
-    if(height > 0){
-      object.attr("ry", height)
-    }else{
-      object.attr("y", (y?y:object.attr("y"))+height)
-      object.attr("ry", Math.abs(height)) 
-    }
-  }else if(object.type == "text"){
-    object.attr("font-size", Math.abs(width))
-    //object.node.style.fontSize = null;
-  }
+//   if(object.type == "rect" || object.type == "image"){
+//     if(width > 0){
+//       object.attr("width", width)
+//     }else{
+//       object.attr("x", (x?x:object.attr("x"))+width)
+//       object.attr("width", Math.abs(width))
+//     }
+//     if(height > 0){
+//       object.attr("height", height)
+//     }else{
+//       object.attr("y", (y?y:object.attr("y"))+height)
+//       object.attr("height", Math.abs(height))
+//     }
+//   }else if(object.type == "ellipse"){
+//     if(width > 0){
+//       object.attr("rx", width)
+//     }else{
+//       object.attr("x", (x?x:object.attr("x"))+width)
+//       object.attr("rx", Math.abs(width))
+//     }
+//     if(height > 0){
+//       object.attr("ry", height)
+//     }else{
+//       object.attr("y", (y?y:object.attr("y"))+height)
+//       object.attr("ry", Math.abs(height))
+//     }
+//   }else if(object.type == "text"){
+//     object.attr("font-size", Math.abs(width))
+//     //object.node.style.fontSize = null;
+//   }
 }
 
-
 changeWidth = function(value){
-  if(editor.selected[0] != undefined){
+	if(editor.selected[0] != undefined){
 	//editor.selected[0].attr({height:editor.selected[0].getBBox().height});
 	var box = editor.selected[0].getBBox();
 	var x = box.width;
@@ -193,6 +192,41 @@ changeOpacity = function(value){
 	editor.selected[0].attr({opacity:value/100});
 	}
 }
+
+changeRotation = function(value){
+	if(editor.selected[0] != undefined){
+	var box = editor.selected[0].getBBox();
+	var x = box.width;
+	var y = box.height;
+	var xp = box.x +x/2;
+    var yp = box.y +y/2;
+	editor.selected[0].rotate(value, xp, yp); //absolute!
+	}
+}
+
+changeSkin = function(value){
+	if(editor.selected[0] != undefined){
+
+
+		//editor.selected[0].data("skin", skin)
+			// 	editor.selected[0].attr({skin: M13}
+		//alert(editor.selected[0].attr("skin"));
+		
+	//alert(editor.selected[0].attr("path")); //gives svg data
+	if(value <= 150){
+		editor.selected[0].hide();
+	}
+	else{
+	editor.selected[0].show();
+	}
+	}
+}
+
+// editor.customAttributes.skin = function (path) {
+// 	alert(editor.selected[0].attr("path"));
+//     return {path: editor.selected[0].attr("path")};
+// };
+
 
 
 resize = function(){
