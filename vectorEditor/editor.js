@@ -262,10 +262,10 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
     
    // if shape_object really is something, store it as a selected object
    if(shape_object !== null) {
-    if(!this.is_selected(shape_object)){
+    //if(!this.is_selected(shape_object)){ // even if selected, stay selected.
       this.select(shape_object);
       this.action = "move";
-    }
+    //}
     //else {
     //  this.action = "move";
     //}
@@ -566,10 +566,10 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
     }else if(this.mode == "ellipse"){
       this.unselect()
     }else */
-    if(this.mode == "path"){
+    //if(this.mode == "path"){
       //this.unselect()
-      this.drawing = null;
-    }/*else if(this.mode == "line"){
+   //   this.drawing = null;
+    /*}/*else if(this.mode == "line"){
       this.unselect()
     }else if(this.mode == "image"){
       this.unselect()
@@ -585,11 +585,12 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
       
     }*/
   }
+  /*
   if(this.lastmode){
     this.setMode(this.lastmode);
     //this.mode = this.lastmode //not selectmode becasue that unselects
     delete this.lastmode;
-  }
+  }*/
   return false;
 }
 

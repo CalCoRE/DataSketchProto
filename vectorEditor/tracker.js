@@ -108,6 +108,10 @@ VectorEditor.prototype.updateTracker = function(tracker){
     tracker.lasty = box.y
   }
 }
+
+/* mhwj - this is cute tooltip code that might come in handy later!
+// but for now, we're ignoring it.
+
 VectorEditor.prototype.trackerBox = function(x, y, action){
   var w = 4
   var shape = this.draw.rect(x - w, y - w, 2*w, 2*w).attr({
@@ -115,7 +119,7 @@ VectorEditor.prototype.trackerBox = function(x, y, action){
     "stroke": "green",
     "fill": "white"
   //THE FOLLOWING LINES HAVE BEEN COMMENTED DUE TO A HORRIBLE BUG IN RAPHAEL
-  }).mouseover(function(){
+    }).mouseover(function(){
     this.attr("fill", "red")
     try{ //easy way out! try catch!
       if(this.paper.editor.trackers[0][0].attr("rotation").split(" ")[0] == "0" && this.paper.editor.action != "resize"){ //ugh
@@ -155,6 +159,11 @@ VectorEditor.prototype.trackerBox = function(x, y, action){
   shape.node.is_tracker = true;
   return shape;
 }
+*/
+
+
+/* This is another cute tooltip code that we can look to later for something.
+// But for now, we're ignoring it.
 
 VectorEditor.prototype.trackerCircle = function(x, y){
   var w = 5
@@ -184,10 +193,15 @@ VectorEditor.prototype.trackerCircle = function(x, y){
   return shape;
 }
 
+*/
+
+/*
 VectorEditor.prototype.hideTooltip = function(){
   this.tt.hide();
 }
+*/
 
+/*
 VectorEditor.prototype.tooltip = function(t,bbox){
   if(!this.tt){
     var set = this.draw.set();
@@ -220,6 +234,7 @@ VectorEditor.prototype.tooltip = function(t,bbox){
   
   return set;
 }
+*/
 
 VectorEditor.prototype.markTracker = function(shape){
   shape.node.is_tracker = true;
@@ -246,6 +261,7 @@ VectorEditor.prototype.showTracker = function(shape){
   tracker.lastx = 0 //if zero then easier
   tracker.lasty = 0 //if zero then easier
   
+  /* mhwj - is this the middle dude?
   tracker.push(this.markTracker(this.draw.ellipse(box.width/2, box.height/2, 7, 7).attr({
         "stroke": "gray",
         "stroke-opacity": 0.5,
@@ -254,13 +270,15 @@ VectorEditor.prototype.showTracker = function(shape){
       })).mousedown(function(){
         this.paper.editor.action = "move"
       }));
+      */
   
   //draw everything relative to origin (0,0) because it gets transformed later
+  /* mhwj we aren't doing anything but path and text right now.
   if(shape.subtype == "line"){
     var line = Raphael.parsePathString(shape.attr('path'));
     
-    tracker.push(this.trackerBox(line[0][1]-box.x,line[0][2]-box.y,"path0"))
-    tracker.push(this.trackerBox(line[1][1]-box.x,line[1][2]-box.y,"path1"))
+    //tracker.push(this.trackerBox(line[0][1]-box.x,line[0][2]-box.y,"path0")) // mhwj - commented out for now
+    //tracker.push(this.trackerBox(line[1][1]-box.x,line[1][2]-box.y,"path1")) // mhwj - commented out for now
     this.trackers.push(tracker)
   }else if(shape.type == "rect" || shape.type == "image"){
     tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3}))
@@ -268,30 +286,31 @@ VectorEditor.prototype.showTracker = function(shape){
     //tracker.push(this.trackerBox(box.width + 10, -10))
     //tracker.push(this.trackerBox(box.width + 10, box.height + 10))
     //tracker.push(this.trackerBox(-10, box.height + 10))
-    tracker.push(this.trackerCircle(box.width/2, rot_offset))
-    tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))
+    //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
+    //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
     this.trackers.push(tracker)
   }else if(shape.type == "ellipse"){
     //tracker.push(this.trackerBox(box.x, box.y))
     //tracker.push(this.trackerBox(box.width, box.y))
     //tracker.push(this.trackerBox(box.width, box.height))
     //tracker.push(this.trackerBox(box.x, box.height))
-    tracker.push(this.trackerCircle(box.width/2, rot_offset))
-    tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))
+    //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
+    //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
     this.trackers.push(tracker)
-  }else if(shape.type == "text"){
+  }else */
+  if(shape.type == "text"){
     tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3}))
-    tracker.push(this.trackerCircle(box.width/2, rot_offset))
-    tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))
+    //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
+    //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
     this.trackers.push(tracker)
   }else if(shape.type == "path" && shape.subtype != "line"){
     tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3}))
-    tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))
-    tracker.push(this.trackerCircle(box.width/2, rot_offset))
+    //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
+    //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
     this.trackers.push(tracker)
   }else{
     tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3}))
-    tracker.push(this.trackerCircle(box.width/2, rot_offset))
+    //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
     this.trackers.push(tracker)
   }
   this.updateTracker(tracker)
