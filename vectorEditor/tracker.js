@@ -85,7 +85,6 @@ VectorEditor.prototype.updateTracker = function(tracker){
         tracker[0].attr({cx: box.x + box.width/2, cy: box.y + box.height/2})
         /// mhwj - here's where i'm adding resize code. previously, this only happened
         // when the resize box was dragged which is why it wasn't here.
-        tracker[0].attr({width: box.width, height: box.height})
         // mhwj - end my mucking around.
         // mhwj - don't think we need these, they're maybe the tooltips?
         //tracker[1].attr({x: pathsplit[0][1]-2, y: pathsplit[0][2]-2})
@@ -103,11 +102,15 @@ VectorEditor.prototype.updateTracker = function(tracker){
     //it truly is "more evil than satan himself" which is itself dated even for the time of writing
     //and am I ever gonna read this? If it's someone that's not me that's reading this
     //please tell me (if year > 2010 or otherwise)
+    
+    var cx = (box.x + box.width/2)
+    var cy = (box.y + box.height/2)
+    
     tracker.translate(box.x - tracker.lastx, box.y - tracker.lasty)
     
     //now here for the magic
     if(shape._ && shape._.rt){
-      tracker.rotate(shape._.rt.deg, (box.x + box.width/2), (box.y + box.height/2))
+      tracker.rotate(shape._.rt.deg, cx, cy)
     }
     
     tracker.lastx = box.x//y = boxxy trollin!

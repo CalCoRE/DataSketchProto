@@ -169,6 +169,7 @@ changeWidth = function(value){
     var yp = box.y +y/2;
 	editor.selected[0].scale(p,1,xp,yp);
 	//resize();
+	editor.newTracker(editor.selected[0]);
 	}
 	
 }
@@ -184,6 +185,7 @@ changeHeight = function(value){
     //alert(box.height)
 	editor.selected[0].scale(1,p,xp,yp);
 	//resize();
+	editor.newTracker(editor.selected[0]);
 	}
 }
 
@@ -202,6 +204,7 @@ changeRotation = function(value){
     var yp = box.y +y/2;
 	editor.selected[0].rotate(value, xp, yp); //absolute!
 	}
+	editor.updateTracker();
 }
 
 changeSkin = function(value){
