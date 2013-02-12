@@ -79,13 +79,19 @@ VectorEditor.prototype.updateTracker = function(tracker){
     var shape = tracker.shape;
     var box = shape.getBBox();
     //this is somewhat hackish, if someone finds a better way to do it...
-    if(shape.type == "path" && this.action.substr(0,4) == "path"){
+    if(shape.type == "path" && this.action.substr(0,4) == "path" ){
       var pathsplit = Raphael.parsePathString(shape.attr("path"))
       if(pathsplit.length == 2){
         tracker[0].attr({cx: box.x + box.width/2, cy: box.y + box.height/2})
-        tracker[1].attr({x: pathsplit[0][1]-2, y: pathsplit[0][2]-2})
-        tracker[2].attr({x: pathsplit[1][1]-2, y: pathsplit[1][2]-2})
+        /// mhwj - here's where i'm adding resize code. previously, this only happened
+        // when the resize box was dragged which is why it wasn't here.
+        tracker[0].attr({width: box.width, height: box.height})
+        // mhwj - end my mucking around.
+        // mhwj - don't think we need these, they're maybe the tooltips?
+        //tracker[1].attr({x: pathsplit[0][1]-2, y: pathsplit[0][2]-2})
+        //tracker[2].attr({x: pathsplit[1][1]-2, y: pathsplit[1][2]-2})
       }
+      
       return;
     }
 
@@ -261,7 +267,7 @@ VectorEditor.prototype.showTracker = function(shape){
   tracker.lastx = 0 //if zero then easier
   tracker.lasty = 0 //if zero then easier
   
-  /* mhwj - is this the middle dude?
+  /* mhwj i don't think we need the cetner indicator right ?
   tracker.push(this.markTracker(this.draw.ellipse(box.width/2, box.height/2, 7, 7).attr({
         "stroke": "gray",
         "stroke-opacity": 0.5,
