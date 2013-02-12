@@ -553,6 +553,7 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
     }
       
     this.action = "";
+    this.mode = "path"; // mhwj - just always default back to draw mode
   
   if(this.selected.length == 1){ // if something is selected...
     if(this.selected[0].getBBox().height == 0 && this.selected[0].getBBox().width == 0){
