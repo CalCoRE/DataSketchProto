@@ -302,6 +302,7 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
     //}else 
     if(this.mode == "path" && this.selected.length == 0){
       shape = this.draw.path("M{0},{1}",x,y)
+      resetForm();
     //}else if(this.mode == "line"){
     //  shape = this.draw.path("M{0},{1}",x,y)
     //  shape.subtype = "line"
