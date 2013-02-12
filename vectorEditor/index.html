@@ -42,7 +42,9 @@
 <button id="polygon" onclick="setMode('polygon')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/polygon.gif" title="Polygon"></button>
 <button id="image" onclick="setMode('image')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/image.gif" title="Image"></button>
 -->
+<!-- text not working new, bring back soon. -mhwj
     <button id="text" onclick="setMode('text')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/text.gif" title="Text"></button>
+-->
     <button id="delete" onclick="setMode('delete')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/delete.gif" title="Delete"></button>
     <button onclick="alert(editor.getMarkup())"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/script_code.png" title="Markup"></button>
     <button onclick="if(confirm('Are you sure you want to clear the canvas?'))editor.deleteAll();"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/arrow_rotate_clockwise.png" title="Reset"></button>
@@ -95,7 +97,7 @@ var penThickness = 5;
     //else if(mode == "image"){
     // editor.prop.src = prompt("Image Source URL:",editor.prop.src)
     //}
-    $("button").attr("disabled",null);
+    //$("button").attr("disabled",null); don't disable for now, mhwj revisit later
     $("#"+mode).attr("disabled","true");
     editor.setMode(mode=='select+'?'select+':mode);
   }
