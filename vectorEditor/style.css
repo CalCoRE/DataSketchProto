@@ -1,0 +1,47 @@
+body {
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+button {   
+	margin: 2px;   
+	padding: 0px;   
+	text-align: center;   
+	font-size: 10pt;   
+	border-color: #d3d3d3;   
+	background-color: white;   
+	border-width: 1px;
+	-moz-border-radius: 5px;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+}
+
+#sliders {
+	text-align: center;
+	position: absolute;
+	width: 150px;
+	bottom: 0px;
+	right: 0px;
+}
+
+#menu {
+	padding: 15px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 30px;
+}
+
+#drawing {
+	left: 0px;
+	top: 0px;
+	padding: 15px;
+	max-width: 130px;
+	text-align: left;
+	position: absolute;
+	font-size: medium;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	vertical-align:middle;
+}
+

@@ -3,18 +3,10 @@
   <title>VectorEditor</title>
   <!-- SOMEBODY FIX THIS HTML -->
 <meta name = "viewport" content = "width = device-width">
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div id="canvas" style="position: absolute;top:0;left:0; width: 100%; height: 100%; top: 0px; left: 0px;-webkit-user-select: none;"></div>
-
-  <style>
-    button {
-      width: 28px;
-      height: 28px;
-      margin-bottom: 5px;
-      padding: 1px;
-    }
-  </style>
     
     <!-- did i mention i suck at html? -->
     <div id="dialog" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
@@ -31,7 +23,7 @@
     
     
     
-  <div style="position: absolute; top: 10px; left: 10px; width: 64px">
+  <div style="position: absolute; top: 10px; left: 10px; width: px"></div>
    <!--
 <button id="select" onclick="setMode('select')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/select.gif" title="Select"></button>
 <button id="selectp"onclick="setMode('selectp')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/selectadd.gif" title="Select Add"></button>
@@ -45,14 +37,18 @@
 <!-- text not working new, bring back soon. -mhwj
     <button id="text" onclick="setMode('text')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/text.gif" title="Text"></button>
 -->
+<div id="menu">
     <button id="delete" onclick="setMode('delete')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/delete.gif" title="Delete"></button>
-    <button onclick="alert(editor.getMarkup())"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/script_code.png" title="Markup"></button>
+<!--    <button onclick="alert(editor.getMarkup())"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/script_code.png" title="Markup"></button> -->
     <button onclick="if(confirm('Are you sure you want to clear the canvas?'))editor.deleteAll();"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/arrow_rotate_clockwise.png" title="Reset"></button>
     
     <button id="save" onclick="save()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/disk.png" title="Delete"></button>
     <button id="open" onclick="opendialog()"><img src="
 http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
+</div>
 
+<div id="sliders">
+Manual Controls
 <form id="manips">
     <input class="slider" type="range" min="1" max="300" step="1" value="150" name="width" onchange='changeWidth(value);'>
     <input class="slider" type="range" min="1" max="300" step="1" value="150" name="height" onchange='changeHeight(value);'>
@@ -60,6 +56,7 @@ http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png
     <input class="slider" type="range" min="-180" max="180" step="1" value="0" name="rotation" onchange='changeRotation(value);'>
     <input class="slider" type="range" min="1" max="300" step="1" value="150" name="skin" onchange='changeSkin(value);'>
 </form>
+</div>
     <br>
     
 
@@ -68,20 +65,20 @@ var penColor="grey";
 var penThickness = 5;
 </script>
 
-    <span>Stroke Color:</span>
-	 <button style="background-color:red;height: 25px; width: 25px" onclick="colorRed(penColor)" ></button>
-	 <button style="background-color:blue;height: 25px; width: 25px" onclick="colorBlue(penColor)" ></button>
-	 <button style="background-color:green;height: 25px; width: 25px" onclick="colorGreen(penColor)" ></button>
-	 <button style="background-color:yellow;height: 25px; width: 25px" onclick="colorYellow(penColor)" ></button>
-	 <button style="background-color:purple;height: 25px; width: 25px" onclick="colorPurple(penColor)" ></button>
-	 <button style="background-color:black;height: 25px; width: 25px" onclick="colorBlack(penColor)" ></button><br><br>
+<div id="drawing">
+	 <button style="background-color:red;" onclick="colorRed(penColor)" ></button>
+	 <button style="background-color:blue;" onclick="colorBlue(penColor)" ></button>
+	 <button style="background-color:green;" onclick="colorGreen(penColor)" ></button>
+	 <button style="background-color:yellow;" onclick="colorYellow(penColor)" ></button>
+	 <button style="background-color:purple;" onclick="colorPurple(penColor)" ></button>
+	 <button style="background-color:black;" onclick="colorBlack(penColor)" ></button>
 
- 	  <span>Stroke Width:</span>
- 	 <button style="background-color:grey;height: 5px; width: 25px" onclick="penThin(penThickness)" ></button>
-	 <button style="background-color:grey;height: 12px; width: 25px" onclick="penRegular(penThickness)" ></button>
-	 <button style="background-color:grey;height: 20px; width: 25px" onclick="penThick(penThickness)" ></button>
- 
-  </div>
+ 	 <button onclick="penThin(penThickness)" ><img src="thin.png" title="Thin"></button>
+	 <button onclick="penRegular(penThickness)" ><img src="mid.png" title="Mid"></button>
+	 <button onclick="penThick(penThickness)" ><img src="thick.png" title="Thick"></button>
+</div>
+
+  
 	<script src="../buttons.js"></script>
   <script type="text/javascript" src="jquery-1.3.2.js"></script>
   <script type="text/javascript" src="raphael.js"></script>
