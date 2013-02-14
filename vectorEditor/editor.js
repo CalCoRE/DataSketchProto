@@ -277,10 +277,10 @@ return; //die trackers die!
     
    // if shape_object really is something, store it as a selected object
    if(shape_object !== null) {
-    if(!this.is_selected(shape_object)){
+    //if(!this.is_selected(shape_object)){ even if selected, stay selected.
       this.select(shape_object);
       this.action = "move";
-    }
+    //}
     //else {
     // this.action = "move";
     //}
