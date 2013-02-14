@@ -38,6 +38,13 @@ function VectorEditor(elem, width, height){
   
   this.listeners = {};
   
+  newSkin = false;
+  this.skins = []
+  this.skins2 = []
+  this.skins3 = []
+  this.skins4 = []
+  this.skins5 = []
+  
   
   var draw = this.draw;
   
@@ -232,6 +239,14 @@ VectorEditor.prototype.set = function(name, value){
 VectorEditor.prototype.onMouseDown = function(x, y, target){
   this.fire("mousedown")
   this.tmpXY = this.onHitXY = [x,y]
+if(this.selected[0] != undefined){
+	//make new skin instead of new object
+  	newSkin = true;
+  	var skinObject = this.selected[0];
+}	
+else{
+	newSkin = false;
+}
   
   //if(this.mode == "select" && !this.selectbox){
 
@@ -243,37 +258,37 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
     }else if(target.parentNode.shape_object){
       shape_object = target.parentNode.shape_object
     }/*else if(!target.is_tracker){ // this would make the select cropper box, which we don't need now
-      if(!this.selectadd) this.unselect();
-      this.selectbox = this.draw.rect(x, y, 0, 0)
-        .attr({"fill-opacity": 0.15, 
-              "stroke-opacity": 0.5, 
-              "fill": "#007fff", //mah fav kolur!
-              "stroke": "#007fff"});
-      return; 
-    }else{
-      return; //die trackers die!
-    }*/
+if(!this.selectadd) this.unselect();
+this.selectbox = this.draw.rect(x, y, 0, 0)
+.attr({"fill-opacity": 0.15,
+"stroke-opacity": 0.5,
+"fill": "#007fff", //mah fav kolur!
+"stroke": "#007fff"});
+return;
+}else{
+return; //die trackers die!
+}*/
     
     
     //if(this.selectadd){
-    //  this.selectAdd(shape_object);
-    //  this.action = "move";
-    //}else 
+    // this.selectAdd(shape_object);
+    // this.action = "move";
+    //}else
     
    // if shape_object really is something, store it as a selected object
    if(shape_object !== null) {
-    //if(!this.is_selected(shape_object)){ // even if selected, stay selected.
+    if(!this.is_selected(shape_object)){
       this.select(shape_object);
       this.action = "move";
-    //}
+    }
     //else {
-    //  this.action = "move";
+    // this.action = "move";
     //}
     this.offsetXY = [shape_object.attr("x") - x,shape_object.attr("y") - y]
-    } else { 
-    	this.unselect();
+    } else {
+     this.unselect();
     } // if shape object is null then i didn't click on anything
-  //}else 
+  //}else
   
   if(this.mode == "delete" && !this.selectbox){
     var shape_object = null
@@ -283,8 +298,8 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
       shape_object = target.parentNode.shape_object
     }else if(!target.is_tracker){
       this.selectbox = this.draw.rect(x, y, 0, 0)
-        .attr({"fill-opacity": 0.15, 
-              "stroke-opacity": 0.5, 
+        .attr({"fill-opacity": 0.15,
+              "stroke-opacity": 0.5,
               "fill": "#ff0000", //oh noes! its red and gonna asplodes!
               "stroke": "#ff0000"});
       return;
@@ -296,22 +311,21 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
   }else if(this.selected.length == 0){ // ok, so now if nothing is selected then draw or put text down
     var shape = null;
     //if(this.mode == "rect"){
-    //  shape = this.draw.rect(x, y, 0, 0);
+    // shape = this.draw.rect(x, y, 0, 0);
     //}else if(this.mode == "ellipse"){
-    //  shape = this.draw.ellipse(x, y, 0, 0);
-    //}else 
+    // shape = this.draw.ellipse(x, y, 0, 0);
+    //}else
     if(this.mode == "path" && this.selected.length == 0){
       shape = this.draw.path("M{0},{1}",x,y)
-      resetForm();
     //}else if(this.mode == "line"){
-    //  shape = this.draw.path("M{0},{1}",x,y)
-    //  shape.subtype = "line"
+    // shape = this.draw.path("M{0},{1}",x,y)
+    // shape.subtype = "line"
     //}else if(this.mode == "polygon"){
-    //  shape = this.draw.path("M{0},{1}",x,y)
-    //  shape.polypoints = [[x,y]]
-    //  shape.subtype = "polygon"
+    // shape = this.draw.path("M{0},{1}",x,y)
+    // shape.polypoints = [[x,y]]
+    // shape.subtype = "polygon"
     //}else if(this.mode == "image"){
-    //  shape = this.draw.image(this.prop.src, x, y, 0, 0);
+    // shape = this.draw.image(this.prop.src, x, y, 0, 0);
       
       //WARNING NEXT IS A HACK!!!!!!
       //shape.attr("src",this.prop.src); //raphael won't return src correctly otherwise
@@ -324,20 +338,77 @@ VectorEditor.prototype.onMouseDown = function(x, y, target){
     if(shape){
       shape.id = this.generateUUID();
       shape.attr({
-          "fill": this.prop.fill, 
+          "fill": this.prop.fill,
           "stroke": this.prop.stroke,
           "stroke-width": this.prop["stroke-width"],
           "fill-opacity": this.prop['fill-opacity'],
           "stroke-opacity": this.prop["stroke-opacity"]
       })
+      if(!newSkin){
       this.addShape(shape, true)
       this.drawing = shape;
+      }
+      else{
+  		//var skinIndex;
+  		skinIndex = undefined;
+      // skinObject is the selected object you are adding the skin to
+      // add shape to array called skins
+      // add it to an index which will indicate which shape number it is
+      
+      for(var i = 0; i < this.shapes.length; i++){
+      	if(skinObject.attr("path") == this.shapes[i].attr("path")){
+      		skinIndex = i;
+      		break;
+      	}
+      }
+      if(skinIndex != undefined){
+      	shape.attr({opacity:0.6});
+      	this.addSkin(shape, true, 0,skinIndex)
+		this.drawing = shape;
+      }
+      else{
+        for(var i = 0; i < this.skins.length; i++){
+      		if(this.skins[i] != undefined && skinObject.attr("path") == this.skins[i].attr("path")){
+      		skinIndex = i;
+      		break;
+      		}
+      	}
+      	
+      	if(skinIndex != undefined){
+      		shape.attr({opacity:0.4});
+    		this.addSkin2(shape, true, 0,skinIndex)
+			this.drawing = shape;
+		}
+		else{
+		for(var i = 0; i < this.skins2.length; i++){
+      		if(this.skins2[i] != undefined && skinObject.attr("path") == this.skins2[i].attr("path")){
+      		skinIndex = i;
+      		break;
+      		}
+      	}
+		if(skinIndex != undefined){
+      		shape.attr({opacity:0.2});
+      		this.addSkin3(shape, true, 0,skinIndex)
+			this.drawing = shape;
+      	}
+      	else{
+      		alert("error, out of skins");
+      	}
+		}
+	  }
+
+
+// 		this.skins[skinIndex] = shape;
+
+		//shape.hide();
+		//alert(this.skins[0].attr("path"));
+      }
     }
-  }else{
-    
   }
+
   return false;
 }
+
 
 VectorEditor.prototype.onMouseMove = function(x, y, target){
 
@@ -516,6 +587,13 @@ VectorEditor.prototype.onDblClick = function(x, y, target){
 VectorEditor.prototype.onMouseUp = function(x, y, target){
   this.fire("mouseup")
   this.onGrabXY = null;
+  
+  if(this.drawing != null && skinIndex != undefined){
+  	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin()
+	hideThings();
+
+	centerSkin();
+  }
   
   // MHWJ if i'm drawing, stop it
   this.drawing = null;
