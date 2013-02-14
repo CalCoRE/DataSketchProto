@@ -108,8 +108,8 @@ Manual Controls
 <div id="sliders">
 
 <form id="manips">
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="width" onchange='changeWidth(value);'>
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="height" onchange='changeHeight(value);'>
+  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="width" onchange='changeScale();'>
+  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="height" onchange='changeScale();'>
   <input class="slider" type="range" min="1" max="100" step="1" value="100" id="opacity" onchange='changeOpacity(value);'>
   <input class="slider" type="range" min="-180" max="180" step="1" value="0" id="rotation" onchange='changeRotation(value);'>
   <input class="slider" type="range" min="1" max="300" step="1" value="150" id="skin" onchange='changeSkin(value);'>
@@ -121,6 +121,7 @@ Manual Controls
 <script>
 var penColor="grey";
 var penThickness = 5;
+var skinIndex;
 </script>
 
 <div id="drawing">
