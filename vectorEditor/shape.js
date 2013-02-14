@@ -244,27 +244,27 @@ changeSkin = function(value){
 	skinIndex=undefined;
 
 	for(var i = 0; i < editor.shapes.length; i++){
-      	if(editor.selected[0].attr("path") == editor.shapes[i].attr("path")){
+      	if(editor.selected[0] == editor.shapes[i]){
       		skinIndex = i;
       	}
       }
     if(skinIndex == undefined){
     	for(var i = 0; i < editor.skins.length; i++){
-      		if(editor.selected[0].attr("path") == editor.skins[i].attr("path")){
+      		if(editor.selected[0] == editor.skins[i]){
       		skinIndex = i;
       		}	
       	}
     }
     if(skinIndex == undefined){
     	for(var i = 0; i < editor.skins2.length; i++){
-      		if(editor.selected[0].attr("path") == editor.skins2[i].attr("path")){
+      		if(editor.selected[0] == editor.skins2[i]){
       		skinIndex = i;
       		}	
       	}
     }
     if(skinIndex == undefined){
     	for(var i = 0; i < editor.skins3.length; i++){
-      		if(editor.selected[0].attr("path") == editor.skins3[i].attr("path")){
+      		if(editor.selected[0] == editor.skins3[i]){
       		skinIndex = i;
       		}	
       	}
