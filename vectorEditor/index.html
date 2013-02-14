@@ -122,6 +122,7 @@ Manual Controls
 var penColor="grey";
 var penThickness = 5;
 var skinIndex;
+var newSkin;
 </script>
 
 <div id="drawing">
@@ -135,6 +136,28 @@ var skinIndex;
  	 <button onclick="penThin(penThickness)" ><img src="thin.png" title="Thin"></button>
 	 <button onclick="penRegular(penThickness)" ><img src="mid.png" title="Mid"></button>
 	 <button onclick="penThick(penThickness)" ><img src="thick.png" title="Thick"></button>
+	 
+   <!-- define on/off styles -->
+     <style type="text/css">
+      .on  { background:green; }
+      .off { background:red; }
+     </style>
+
+     <!-- define the toggle function -->
+     <script language="javascript">
+        function toggleState(item){
+           if(item.className == "on") {
+           		newSkin = false;
+              item.className="off";
+           } else {
+              item.className="on";
+              newSkin = true;
+           }
+        }
+     </script>
+     <!-- call 'toggleState' whenever clicked -->
+     <input type="button" id="btn" value="draw skin" 
+        class="off" onclick="toggleState(this)" />
 </div>
 
   
