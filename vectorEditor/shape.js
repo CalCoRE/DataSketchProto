@@ -213,6 +213,8 @@ changeScale = function(){
     var yp = box.y +y/2;
 	editor.selected[0].scale(width/100,height/100,xp,yp);
 	}
+	
+	editor.newTracker(editor.selected[0])
 }
 
 
@@ -228,9 +230,11 @@ changeRotation = function(value){
 	var x = box.width;
 	var y = box.height;
 	var xp = box.x +x/2;
-    var yp = box.y +y/2;
+    	var yp = box.y +y/2;
 	editor.selected[0].rotate(value, xp, yp); //absolute!
 	}
+	
+	editor.updateTracker();
 }
 
 
