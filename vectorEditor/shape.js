@@ -65,6 +65,50 @@ VectorEditor.prototype.addShape = function(shape,no_select, no_fire){
   if(!no_fire)this.fire("addedshape",shape,no_select);
 }
 
+VectorEditor.prototype.addSkin = function(shape,no_select, no_fire, skinIndex){
+  if(!no_fire)this.fire("addshape",shape,no_select);
+  shape.node.shape_object = shape
+  if(!no_select){
+    this.selected = [shape]
+  }
+  this.skins[skinIndex]=shape;
+  //this.skins.push(shape)
+  if(!no_fire)this.fire("addedshape",shape,no_select);
+}
+
+VectorEditor.prototype.addSkin2 = function(shape,no_select, no_fire, skinIndex){
+  if(!no_fire)this.fire("addshape",shape,no_select);
+  shape.node.shape_object = shape
+  if(!no_select){
+    this.selected = [shape]
+  }
+  this.skins2[skinIndex]=shape;
+  //this.skins.push(shape)
+  if(!no_fire)this.fire("addedshape",shape,no_select);
+}
+
+VectorEditor.prototype.addSkin3 = function(shape,no_select, no_fire, skinIndex){
+  if(!no_fire)this.fire("addshape",shape,no_select);
+  shape.node.shape_object = shape
+  if(!no_select){
+    this.selected = [shape]
+  }
+  this.skins3[skinIndex]=shape;
+  //this.skins.push(shape)
+  if(!no_fire)this.fire("addedshape",shape,no_select);
+}
+
+VectorEditor.prototype.addSkin4 = function(shape,no_select, no_fire, skinIndex){
+  if(!no_fire)this.fire("addshape",shape,no_select);
+  shape.node.shape_object = shape
+  if(!no_select){
+    this.selected = [shape]
+  }
+  this.skins4[skinIndex]=shape;
+  //this.skins.push(shape)
+  if(!no_fire)this.fire("addedshape",shape,no_select);
+}
+
 VectorEditor.prototype.rectsIntersect = function(r1, r2) {
   return r2.x < (r1.x+r1.width) &&
           (r2.x+r2.width) > r1.x &&
@@ -158,36 +202,19 @@ VectorEditor.prototype.resize = function(object, width, height, x, y){
 //   }
 }
 
-changeWidth = function(value){
+changeScale = function(){
+	var width = document.getElementById('width').value;
+	var height = document.getElementById('height').value;
 	if(editor.selected[0] != undefined){
-	//editor.selected[0].attr({height:editor.selected[0].getBBox().height});
 	var box = editor.selected[0].getBBox();
 	var x = box.width;
 	var y = box.height;
-	var p = value/100;
 	var xp = box.x +x/2;
     var yp = box.y +y/2;
-	editor.selected[0].scale(p,1,xp,yp);
-	//resize();
-	editor.newTracker(editor.selected[0]);
+	editor.selected[0].scale(width/100,height/100,xp,yp);
 	}
-	
 }
 
-changeHeight = function(value){
-	if(editor.selected[0] != undefined){
-	var box = editor.selected[0].getBBox();
-	var x = box.width;
-	var y = box.height;
-	var p = value/100;
-	var xp = box.x +x/2;
-    var yp = box.y +y/2;
-    //alert(box.height)
-	editor.selected[0].scale(1,p,xp,yp);
-	//resize();
-	editor.newTracker(editor.selected[0]);
-	}
-}
 
 changeOpacity = function(value){
 	if(editor.selected[0] != undefined){
@@ -204,37 +231,167 @@ changeRotation = function(value){
     var yp = box.y +y/2;
 	editor.selected[0].rotate(value, xp, yp); //absolute!
 	}
-	editor.updateTracker();
 }
 
+
 changeSkin = function(value){
+//should we put in a way to click on 'skin' and change back to shape?
 	if(editor.selected[0] != undefined){
+	skinIndex=undefined;
 
+	for(var i = 0; i < editor.shapes.length; i++){
+      	if(editor.selected[0].attr("path") == editor.shapes[i].attr("path")){
+      		skinIndex = i;
+      	}
+      }
+    if(skinIndex == undefined){
+    	for(var i = 0; i < editor.skins.length; i++){
+      		if(editor.selected[0].attr("path") == editor.skins[i].attr("path")){
+      		skinIndex = i;
+      		}	
+      	}
+    }
+    if(skinIndex == undefined){
+    	for(var i = 0; i < editor.skins2.length; i++){
+      		if(editor.selected[0].attr("path") == editor.skins2[i].attr("path")){
+      		skinIndex = i;
+      		}	
+      	}
+    }
+    if(skinIndex == undefined){
+    	for(var i = 0; i < editor.skins3.length; i++){
+      		if(editor.selected[0].attr("path") == editor.skins3[i].attr("path")){
+      		skinIndex = i;
+      		}	
+      	}
+    }
 
-		//editor.selected[0].data("skin", skin)
+//alert(editor.shapes.length);
+
+// 		editor.selected[0].attr({skin:editor.selected[0].attr("path")})
+// 		 	alert(editor.selected[0].attr("skin"));
 			// 	editor.selected[0].attr({skin: M13}
 		//alert(editor.selected[0].attr("skin"));
 		
 	//alert(editor.selected[0].attr("path")); //gives svg data
-	if(value <= 150){
-		editor.selected[0].hide();
+	if(value == 1){
+		editor.shapes[skinIndex].show();
+		if(editor.skins[skinIndex] != null){
+		editor.skins[skinIndex].show();
+		}
+		if(editor.skins2[skinIndex] != null){
+		editor.skins2[skinIndex].show();
+		}
+		if(editor.skins3[skinIndex] != null){
+		editor.skins3[skinIndex].show();
+		}
+	}
+	else if(value <= 100){
+		editor.shapes[skinIndex].show();
+		if(editor.skins[skinIndex] != null){
+		editor.skins[skinIndex].hide();
+		}
+		if(editor.skins2[skinIndex] != null){
+		editor.skins2[skinIndex].hide();
+		}
+		if(editor.skins3[skinIndex] != null){
+		editor.skins3[skinIndex].hide();
+		}
+	}
+	else if(value <= 200){
+		editor.shapes[skinIndex].hide();
+		if(editor.skins[skinIndex] != null){
+		editor.skins[skinIndex].show();
+		}
+		if(editor.skins2[skinIndex] != null){
+		editor.skins2[skinIndex].hide();
+		}
+		if(editor.skins3[skinIndex] != null){
+		editor.skins3[skinIndex].hide();
+		}
+	}
+	else if(value <= 300){
+		editor.shapes[skinIndex].hide();
+		if(editor.skins[skinIndex] != null){
+		editor.skins[skinIndex].hide();
+		}
+		if(editor.skins2[skinIndex] != null){
+		editor.skins2[skinIndex].show();
+		}
+		if(editor.skins3[skinIndex] != null){
+		editor.skins3[skinIndex].hide();
+		}
 	}
 	else{
-	editor.selected[0].show();
+		editor.shapes[skinIndex].hide();
+		if(editor.skins[skinIndex] != null){
+		editor.skins[skinIndex].hide();
+		}
+		if(editor.skins2[skinIndex] != null){
+		editor.skins2[skinIndex].hide();
+		}
+		if(editor.skins3[skinIndex] != null){
+		editor.skins3[skinIndex].show();
+		}
 	}
 	}
 }
 
-// editor.customAttributes.skin = function (path) {
-// 	alert(editor.selected[0].attr("path"));
+hideThings = function(){
+	if(editor.skins3[skinIndex] != null){
+		editor.skins2[skinIndex].hide();
+		editor.skins[skinIndex].hide();
+		editor.shapes[skinIndex].hide();
+	}
+	else if(editor.skins2[skinIndex] != null){
+		editor.skins[skinIndex].hide();
+		editor.shapes[skinIndex].hide();
+	}
+	else if(editor.skins[skinIndex] != null){
+		editor.shapes[skinIndex].hide();
+	}
+}
+
+centerSkin = function(){
+	var box = editor.shapes[skinIndex].getBBox();
+	var x = box.width;
+	var y = box.height;
+	var xp = box.x +x/2;
+    var yp = box.y +y/2;
+
+	if(editor.skins3[skinIndex] != null){
+
+    var box3 = editor.skins3[skinIndex].getBBox();
+    var x3 = box3.width;
+	var y3 = box3.height;
+	var xp3 = box3.x +x/2;
+    var yp3 = box3.y +y/2;
+   
+   	editor.skins3[skinIndex].translate(xp-xp3,yp-yp3);
+    }
+    else if(editor.skins2[skinIndex] != null){
+    var box2 = editor.skins2[skinIndex].getBBox();
+    var x2 = box2.width;
+	var y2 = box2.height;
+	var xp2 = box2.x +x/2;
+    var yp2 = box2.y +y/2;
+   
+   	editor.skins2[skinIndex].translate(xp-xp2,yp-yp2);
+    }
+    
+    else if(editor.skins[skinIndex] != null){
+    
+    var box1 = editor.skins[skinIndex].getBBox();
+    var x1 = box1.width;
+	var y1 = box1.height;
+	var xp1 = box1.x +x/2;
+    var yp1 = box1.y +y/2;
+   
+   	editor.skins[skinIndex].translate(xp-xp1,yp-yp1);
+    }
+    
+}
+// editor.customAttributes.skin = function() {
+//  	alert(editor.selected[0].attr("path"));
 //     return {path: editor.selected[0].attr("path")};
 // };
-
-
-
-resize = function(){
-
-//updates path attributes
-	var box = editor.selected[0].getBBox();
-	editor.selected[0].attr({height:box.height});
-}
