@@ -47,6 +47,7 @@
 http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
 </div>
 
+<!--
 
 <div id="motion">
 Manual Controls
@@ -101,6 +102,7 @@ Manual Controls
 	
 </form>
 </div>
+-->
 
 <div id="sliders">
 
@@ -323,13 +325,11 @@ newshape = draw.path("")
 			var beta = 0;
 			var gamma = 0;
 			
-			/*
+			
 			if (window.DeviceMotionEvent==undefined) {
-				document.getElementById("no").style.display="block";
-				document.getElementById("yes").style.display="none";
-			} 
-			*/
-			else {
+				//document.getElementById("no").style.display="block";
+				//document.getElementById("yes").style.display="none";
+			} else {
 				window.ondevicemotion = function(event) {
 					ax = Math.round(Math.abs(event.accelerationIncludingGravity.x * 1));
 					ay = Math.round(Math.abs(event.accelerationIncludingGravity.y * 1));
@@ -373,6 +373,7 @@ newshape = draw.path("")
 					return "#" + d2h(red) + d2h(green) + d2h(blue);
 				}
  */
+
 				setInterval(function() {
 					document.getElementById("xlabel").innerHTML = "X: " + ax;
 					document.getElementById("ylabel").innerHTML = "Y: " + ay;
@@ -401,7 +402,7 @@ newshape = draw.path("")
 				}
 				
 				
-			} 
+//			} 
 
   </script>
 </body>
