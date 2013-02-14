@@ -45,3 +45,10 @@ button {
 	vertical-align:middle;
 }
 
+#motion {
+	position: absolute;
+	right: 200px;
+	bottom: 0px;
+	max-width: 200px;
+}
+
