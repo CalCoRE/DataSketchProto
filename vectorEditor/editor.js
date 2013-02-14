@@ -590,10 +590,12 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
   
   if(this.drawing != null && skinIndex != undefined){
   	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin()
-	hideThings();
+  	if( ! (this.drawing.getBBox().height == 0 && this.drawing.getBBox().width == 0 )){ // if there's actually something drawn
+      hideThings();
 
 	centerSkin();
-  }
+      }
+    }
   
   // MHWJ if i'm drawing, stop it
   this.drawing = null;
