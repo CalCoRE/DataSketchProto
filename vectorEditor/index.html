@@ -62,12 +62,13 @@ Manual Controls
 </tr>
 
 <tr>
-<td><input type="radio" name="widthInput" value="none" checked></td>
-<td><input type="radio" name="widthInput" value="x"></td>
-<td><input type="radio" name="widthInput" value="y"></td>
-<td><input type="radio" name="widthInput" value="z"></td>
+<td><input type="radio" name="widthInput" id="width_none" checked></td>
+<td><input type="radio" name="widthInput" id="width_x"></td>
+<td><input type="radio" name="widthInput" id="width_y"></td>
+<td><input type="radio" name="widthInput" id="width_z"></td>
 </tr>
 
+<!--
 <tr>
 <td><input type="radio" name="heightInput" value="none" checked></td>
 <td><input type="radio" name="heightInput" value="x"></td>
@@ -98,6 +99,7 @@ Manual Controls
 <td><input type="radio" name="skinInput" value="y"></td>
 <td><input type="radio" name="skinInput" value="z"></td>
 </tr>
+-->
 </table>
 	
 </form>
@@ -107,11 +109,11 @@ Manual Controls
 <div id="sliders">
 
 <form id="manips">
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" name="width" onchange='changeWidth(value);'>
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" name="height" onchange='changeHeight(value);'>
-  <input class="slider" type="range" min="1" max="100" step="1" value="100" name="opacity" onchange='changeOpacity(value);'>
-  <input class="slider" type="range" min="-180" max="180" step="1" value="0" name="rotation" onchange='changeRotation(value);'>
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" name="skin" onchange='changeSkin(value);'>
+  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="width" onchange='changeWidth(value);'>
+  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="height" onchange='changeHeight(value);'>
+  <input class="slider" type="range" min="1" max="100" step="1" value="100" id="opacity" onchange='changeOpacity(value);'>
+  <input class="slider" type="range" min="-180" max="180" step="1" value="0" id="rotation" onchange='changeRotation(value);'>
+  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="skin" onchange='changeSkin(value);'>
 </form>
 </div>
     <br>
@@ -398,6 +400,22 @@ newshape = draw.path("")
 
 					document.bgColor = makecolor(arAlpha, arBeta, arGamma);
 */
+
+
+
+					//mhwj - ok, first attempt a magic. If any of the sliders are connected to these values, update them.
+					//since the selected shape is linked to the slider, it should update too!
+					
+					if(!document.getElementById("width_none").checked) { // if the width isn't none, it's something
+						if(document.getElementById("width_x").checked) {
+							document.getElementById("width").value(alpha)
+						} else if(document.getElementById("width_y").checked) {
+							document.getElementById("width").value(beta)
+						} else if(document.getElementById("width_z").checked) {
+							document.getElementById("width").value(gamma)
+						}
+					}
+
 				}, delay);
 				}
 				
