@@ -38,7 +38,6 @@ function VectorEditor(elem, width, height){
   
   this.listeners = {};
   
-  newSkin = false;
   this.skins = []
   this.skins2 = []
   this.skins3 = []
@@ -239,14 +238,11 @@ VectorEditor.prototype.set = function(name, value){
 VectorEditor.prototype.onMouseDown = function(x, y, target){
   this.fire("mousedown")
   this.tmpXY = this.onHitXY = [x,y]
-if(this.selected[0] != undefined){
+if(this.selected[0] != undefined && newSkin == true){
 	//make new skin instead of new object
-  	newSkin = true;
   	var skinObject = this.selected[0];
 }	
-else{
-	newSkin = false;
-}
+
   
   //if(this.mode == "select" && !this.selectbox){
 
@@ -348,7 +344,7 @@ return; //die trackers die!
       this.addShape(shape, true)
       this.drawing = shape;
       }
-      else{
+      else if(skinObject != null){
   		//var skinIndex;
   		skinIndex = undefined;
       // skinObject is the selected object you are adding the skin to
