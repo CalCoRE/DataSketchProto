@@ -115,6 +115,8 @@ Manual Controls
   <input class="slider" type="range" min="-180" max="180" step="1" value="0" id="rotation" onchange='changeRotation(value);'>
   <input class="slider" type="range" min="1" max="300" step="1" value="150" id="skin" onchange='changeSkin(value);'>
 </form>
+
+  <button name="mytestbutton" onclick="document.getElementById('width').value = 50;changeWidth(50);"></button>
 </div>
     <br>
     
@@ -408,7 +410,7 @@ newshape = draw.path("")
 					
 					if(!document.getElementById("width_none").checked) { // if the width isn't none, it's something
 						if(document.getElementById("width_x").checked) {
-							document.getElementById("width").value(alpha)
+							document.getElementById('width').value = alpha;changeWidth(alpha);
 						} else if(document.getElementById("width_y").checked) {
 							document.getElementById("width").value(beta)
 						} else if(document.getElementById("width_z").checked) {
