@@ -374,6 +374,30 @@ newshape = draw.path("")
 					return "#" + d2h(red) + d2h(green) + d2h(blue);
 				}
  */
+ 
+ 				var changeEvent = function(manip, value) {
+ 					switch( manip ){
+ 						case 'width':
+ 						changeWidth(value)
+ 						break;
+ 						
+ 						case 'height':
+ 						changeHeight(value)
+ 						break;
+ 						
+ 						case 'opacity':
+ 						changeOpacity(value)
+ 						break;
+ 						
+ 						case 'rotation':
+ 						changeRotation(value)
+ 						break;
+ 						
+ 						case 'skin':
+ 						changeSkin(value)
+ 						break;
+ 					}
+ 				}
 
 				setInterval(function() {
 					document.getElementById("xlabel").innerHTML = "X: " + alpha;
@@ -412,11 +436,14 @@ newshape = draw.path("")
 					
 						if(!document.getElementById(currentManip+"_none").checked) { // if the width isn't none, it's something
 							if(document.getElementById(currentManip+"_x").checked) {
-								document.getElementById(currentManip).value = alpha;changeWidth(alpha);
+								document.getElementById(currentManip).value = alpha;
+								changeEvent(currentManip, alpha);
 							} else if(document.getElementById(currentManip+"_y").checked) {
-								document.getElementById(currentManip).value = beta;changeWidth(beta);
+								document.getElementById(currentManip).value = beta;
+								changeEvent(currentManip, beta);
 							} else if(document.getElementById(currentManip+"_z").checked) {
-								document.getElementById(currentManip).value = gamma;changeWidth(gamma);
+								document.getElementById(currentManip).value = gamma;
+								changeEvent(currentManip, gamma);
 							}
 						}
 					
