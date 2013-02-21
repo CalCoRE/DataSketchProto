@@ -423,6 +423,47 @@ VectorEditor.prototype.onMouseMove = function(x, y, target){
     //this.moveTracker(x - this.tmpXY[0], y - this.tmpXY[1])
     this.updateTracker();
     this.tmpXY = [x, y];
+    
+    //now we want to move all the skins with it
+    //TO DO: make a find skinIndex function - eliminate repeating code
+    var centerObject= this.selected[0];
+    centerBox = centerObject.getBBox();
+    skinIndexMove = undefined; 
+    
+      for(var i = 0; i < this.shapes.length; i++){
+      if(centerObject == this.shapes[i]){
+      		skinIndexMove = i;
+      		break;
+      	}
+      }
+      if(skinIndexMove == undefined){
+        for(var i = 0; i < this.skins.length; i++){
+      		if(this.skins[i] != undefined && centerObject == this.skins[i]){
+      		skinIndexMove = i;
+      		break;
+      		}
+      	}
+      	
+
+		if(skinIndexMove == undefined){
+		for(var i = 0; i < this.skins2.length; i++){
+      		if(this.skins2[i] != undefined && centerObject == this.skins2[i]){
+      		skinIndexMove = i;
+      		break;
+      		}
+      	}
+    	}
+    	if(skinIndexMove == undefined){
+		for(var i = 0; i < this.skins3.length; i++){
+      		if(this.skins3[i] != undefined && centerObject == this.skins3[i]){
+      		skinIndexMove = i;
+      		break;
+      		}
+      	}
+    	}
+    	
+
+  } 
   }
   
   /* I'm not treating select as a mode in this version. something is automatically selected if directly clicked on.
@@ -592,6 +633,11 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
 	centerSkin();
       }
     }
+    
+  if(skinIndexMove != undefined){
+    centerSkinMove();
+    skinIndexMove = undefined;
+  }
   
   // MHWJ if i'm drawing, stop it
   this.drawing = null;
