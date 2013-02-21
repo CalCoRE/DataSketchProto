@@ -352,7 +352,7 @@ return; //die trackers die!
       // add it to an index which will indicate which shape number it is
       
       for(var i = 0; i < this.shapes.length; i++){
-      	if(skinObject.attr("path") == this.shapes[i].attr("path")){
+      	if(skinObject == this.shapes[i]){
       		skinIndex = i;
       		break;
       	}
@@ -364,7 +364,7 @@ return; //die trackers die!
       }
       else{
         for(var i = 0; i < this.skins.length; i++){
-      		if(this.skins[i] != undefined && skinObject.attr("path") == this.skins[i].attr("path")){
+      		if(this.skins[i] != undefined && skinObject == this.skins[i]){
       		skinIndex = i;
       		break;
       		}
@@ -377,7 +377,7 @@ return; //die trackers die!
 		}
 		else{
 		for(var i = 0; i < this.skins2.length; i++){
-      		if(this.skins2[i] != undefined && skinObject.attr("path") == this.skins2[i].attr("path")){
+      		if(this.skins2[i] != undefined && skinObject == this.skins2[i]){
       		skinIndex = i;
       		break;
       		}
@@ -629,7 +629,7 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
   	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin()
   	if( ! (this.drawing.getBBox().height == 0 && this.drawing.getBBox().width == 0 )){ // if there's actually something drawn
       hideThings();
-
+	centerBox = this.shapes[skinIndex].getBBox();
 	centerSkin();
       }
     }
