@@ -356,12 +356,21 @@ hideThings = function(){
 	}
 }
 
+//BUGS: drawing of first skin doesn't stop on mouse up
 centerSkin = function(){
+	if(editor.skins.length > 0){
+	var cx = centerBox.width;
+	var cy = centerBox.height;
+	var cxp = centerBox.x +cx/2;
+    var cyp = centerBox.y +cy/2;
+	
 	var box = editor.shapes[skinIndex].getBBox();
 	var x = box.width;
 	var y = box.height;
 	var xp = box.x +x/2;
     var yp = box.y +y/2;
+    
+    editor.shapes[skinIndex].translate(cxp-xp,cyp-yp)
 
 	if(editor.skins3[skinIndex] != null){
 
@@ -371,19 +380,19 @@ centerSkin = function(){
 	var xp3 = box3.x +x/2;
     var yp3 = box3.y +y/2;
    
-   	editor.skins3[skinIndex].translate(xp-xp3,yp-yp3);
+   	editor.skins3[skinIndex].translate(cxp-xp3,cyp-yp3);
     }
-    else if(editor.skins2[skinIndex] != null){
+   	if(editor.skins2[skinIndex] != null){
     var box2 = editor.skins2[skinIndex].getBBox();
     var x2 = box2.width;
 	var y2 = box2.height;
 	var xp2 = box2.x +x/2;
     var yp2 = box2.y +y/2;
    
-   	editor.skins2[skinIndex].translate(xp-xp2,yp-yp2);
+   	editor.skins2[skinIndex].translate(cxp-xp2,cyp-yp2);
     }
     
-    else if(editor.skins[skinIndex] != null){
+ 	if(editor.skins[skinIndex] != null){
     
     var box1 = editor.skins[skinIndex].getBBox();
     var x1 = box1.width;
@@ -391,9 +400,57 @@ centerSkin = function(){
 	var xp1 = box1.x +x/2;
     var yp1 = box1.y +y/2;
    
-   	editor.skins[skinIndex].translate(xp-xp1,yp-yp1);
+   	editor.skins[skinIndex].translate(cxp-xp1,cyp-yp1);
+    }
+    }
+}
+
+centerSkinMove = function(){
+	if(editor.skins.length > 0){
+	var cx = centerBox.width;
+	var cy = centerBox.height;
+	var cxp = centerBox.x +cx/2;
+    var cyp = centerBox.y +cy/2;
+	
+	var box = editor.shapes[skinIndexMove].getBBox();
+	var x = box.width;
+	var y = box.height;
+	var xp = box.x +x/2;
+    var yp = box.y +y/2;
+    
+    editor.shapes[skinIndexMove].translate(cxp-xp,cyp-yp)
+
+	if(editor.skins3[skinIndexMove] != null){
+
+    var box3 = editor.skins3[skinIndexMove].getBBox();
+    var x3 = box3.width;
+	var y3 = box3.height;
+	var xp3 = box3.x +x/2;
+    var yp3 = box3.y +y/2;
+   
+   	editor.skins3[skinIndexMove].translate(cxp-xp3,cyp-yp3);
+    }
+   	if(editor.skins2[skinIndexMove] != null){
+    var box2 = editor.skins2[skinIndexMove].getBBox();
+    var x2 = box2.width;
+	var y2 = box2.height;
+	var xp2 = box2.x +x/2;
+    var yp2 = box2.y +y/2;
+   
+   	editor.skins2[skinIndexMove].translate(cxp-xp2,cyp-yp2);
     }
     
+ 	if(editor.skins[skinIndexMove] != null){
+    
+    var box1 = editor.skins[skinIndexMove].getBBox();
+    var x1 = box1.width;
+	var y1 = box1.height;
+	var xp1 = box1.x +x/2;
+    var yp1 = box1.y +y/2;
+   
+   	editor.skins[skinIndexMove].translate(cxp-xp1,cyp-yp1);
+    }
+    }
 }
 // editor.customAttributes.skin = function() {
 //  	alert(editor.selected[0].attr("path"));
