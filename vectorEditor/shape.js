@@ -217,6 +217,28 @@ changeScale = function(){
 	editor.newTracker(editor.selected[0])
 }
 
+changeX = function(value){
+	if(editor.selected[0] != undefined){
+	var box = editor.selected[0].getBBox();
+	var x = box.width;
+	var xp = box.x +x/2;
+
+	editor.selected[0].translate(value-xp,0);
+	}
+	editor.updateTracker();
+}
+
+changeY = function(value){
+	if(editor.selected[0] != undefined){
+	var box = editor.selected[0].getBBox();
+	var y = box.height;
+    var yp = box.y +y/2;
+	
+	editor.selected[0].translate(0, 700-value-yp);
+	}
+	editor.updateTracker();
+}
+
 
 changeOpacity = function(value){
 	if(editor.selected[0] != undefined){
@@ -356,7 +378,7 @@ hideThings = function(){
 	}
 }
 
-//BUGS: drawing of first skin doesn't stop on mouse up
+
 centerSkin = function(){
 	if(editor.skins.length > 0){
 	var cx = centerBox.width;
