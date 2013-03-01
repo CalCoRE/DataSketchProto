@@ -202,18 +202,29 @@ VectorEditor.prototype.resize = function(object, width, height, x, y){
 //   }
 }
 
-changeScale = function(){
-	var width = document.getElementById('width').value;
-	var height = document.getElementById('height').value;
+
+//combine scale and rotate functions - with transform, is there still a way to separate width and height?
+changeShape = function(){
+	var width = document.getElementById('width').value/100;
+	var height = document.getElementById('height').value/100;
+	var rotation = document.getElementById('rotation').value;
+	var xchange = document.getElementById('xchange').value;
+	var ychange = document.getElementById('ychange').value;
 	if(editor.selected[0] != undefined){
 	var box = editor.selected[0].getBBox();
 	var x = box.width;
 	var y = box.height;
 	var xp = box.x +x/2;
     var yp = box.y +y/2;
-	editor.selected[0].scale(width/100,height/100,xp,yp);
+    var sc = "S" + width, height, xp, yp;
+    var cs = "S" + height, width, xp, yp;
+    var rt = "R"+rotation, xp, yp;
+    var dif = xchange-xp;
+    var xc = "T"+dif+ ",0";
+    var dify = 700-ychange-yp;
+    var yc = "T0," + dify;
+	editor.selected[0].transform(sc+rt+cs+xc+yc);
 	}
-	
 	editor.newTracker(editor.selected[0])
 }
 
@@ -222,8 +233,9 @@ changeX = function(value){
 	var box = editor.selected[0].getBBox();
 	var x = box.width;
 	var xp = box.x +x/2;
+	var xc = value-xp;
 
-	editor.selected[0].translate(value-xp,0);
+	editor.selected[0].translate(xc, 0);
 	}
 	editor.updateTracker();
 }
@@ -233,8 +245,9 @@ changeY = function(value){
 	var box = editor.selected[0].getBBox();
 	var y = box.height;
     var yp = box.y +y/2;
+    var yc = 700-value-yp;
 	
-	editor.selected[0].translate(0, 700-value-yp);
+	editor.selected[0].translate(0, yc);
 	}
 	editor.updateTracker();
 }
@@ -244,19 +257,6 @@ changeOpacity = function(value){
 	if(editor.selected[0] != undefined){
 	editor.selected[0].attr({opacity:value/100});
 	}
-}
-
-changeRotation = function(value){
-	if(editor.selected[0] != undefined){
-	var box = editor.selected[0].getBBox();
-	var x = box.width;
-	var y = box.height;
-	var xp = box.x +x/2;
-    	var yp = box.y +y/2;
-	editor.selected[0].rotate(value, xp, yp); //absolute!
-	}
-	
-	editor.updateTracker();
 }
 
 

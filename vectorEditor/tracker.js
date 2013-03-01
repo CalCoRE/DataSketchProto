@@ -270,16 +270,20 @@ VectorEditor.prototype.showTracker = function(shape){
   tracker.lastx = 0 //if zero then easier
   tracker.lasty = 0 //if zero then easier
   
-  /* mhwj i don't think we need the cetner indicator right ?
+  
+  
+  // mhwj i don't think we need the cetner indicator right ?
   tracker.push(this.markTracker(this.draw.ellipse(box.width/2, box.height/2, 7, 7).attr({
         "stroke": "gray",
         "stroke-opacity": 0.5,
         "fill": "gray",
         "fill-opacity": 0.15
       })).mousedown(function(){
-        this.paper.editor.action = "move"
+        //drag center indicator, basically changing center of object
+       // var rect = this.paper.rect(500, 500, 50, 50).draggable();
+		//rect.draggable();
       }));
-      */
+      
   
   //draw everything relative to origin (0,0) because it gets transformed later
   /* mhwj we aren't doing anything but path and text right now.
@@ -350,4 +354,11 @@ VectorEditor.prototype.showGroupTracker = function(shape){
   
   this.updateTracker(tracker)
 }
+
+changeCenter = function(tracker){
+	//alert(tracker);
+	
+	
+}
+
 

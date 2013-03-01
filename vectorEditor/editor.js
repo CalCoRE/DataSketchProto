@@ -12,6 +12,7 @@ function VectorEditor(elem, width, height){
   this.onHitXY = [0,0]
   this.offsetXY = [0,0]
   this.tmpXY = [0,0]
+  
 
   //cant think of any better way to do it
   this.prop = {
