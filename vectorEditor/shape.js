@@ -219,10 +219,8 @@ changeShape = function(){
     var sc = "S" + width, height, xp, yp;
     var cs = "S" + height, width, xp, yp;
     var rt = "R"+rotation, xp, yp;
-    var dif = xchange-xp;
-    var xc = "T"+dif+ ",0";
-    var dify = 700-ychange-yp;
-    var yc = "T0," + dify;
+    var xc = "T"+xchange+ ",0";
+    var yc = "T0," + -ychange;
 	editor.selected[0].transform(sc+rt+cs+xc+yc);
 	}
 	editor.newTracker(editor.selected[0])
@@ -233,9 +231,9 @@ changeX = function(value){
 	var box = editor.selected[0].getBBox();
 	var x = box.width;
 	var xp = box.x +x/2;
-	var xc = value-xp;
+	var xc = -xp;
 
-	editor.selected[0].translate(xc, 0);
+	editor.selected[0].transform("T"+value+",0");
 	}
 	editor.updateTracker();
 }
@@ -247,7 +245,7 @@ changeY = function(value){
     var yp = box.y +y/2;
     var yc = 700-value-yp;
 	
-	editor.selected[0].translate(0, yc);
+	editor.selected[0].transform("T0," + -value);
 	}
 	editor.updateTracker();
 }
