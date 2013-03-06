@@ -423,6 +423,7 @@ centerSkin = function(){
    	editor.skins[skinIndex].translate(cxp-xp1,cyp-yp1);
     }
     }
+	editor.updateTracker()
 }
 
 centerSkinMove = function(){
@@ -471,6 +472,7 @@ centerSkinMove = function(){
    	editor.skins[skinIndexMove].translate(cxp-xp1,cyp-yp1);
     }
     }
+    editor.updateTracker()
 }
 // editor.customAttributes.skin = function() {
 //  	alert(editor.selected[0].attr("path"));

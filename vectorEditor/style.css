@@ -25,6 +25,15 @@ button {
 	right: 0px;
 }
 
+#datain {
+	text-align: center;
+	position: absolute;
+	width: 150px;
+	bottom: 0px;
+	left: 0px;
+}
+
+
 #menu {
 	padding: 15px;
 	position: absolute;

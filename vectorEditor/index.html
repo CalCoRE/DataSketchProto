@@ -15,11 +15,27 @@
 <input type="button" value="Close" onclick="document.getElementById('dialog').style.display='none'">
 -->
       <input type="button" value="Close" onclick="jQuery('#dialog').slideUp()">
+      
       <br><br>
       <center>
       <textarea id="data" style="width: 90%; height: 80%"></textarea>
       </center>
     </div>
+    
+    <div id="dialog2" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
+      <input type="button" value="Import Data" onclick="import_data()">
+      <!--
+<input type="button" value="Close" onclick="document.getElementById('dialog').style.display='none'">
+-->
+      <input type="button" value="Close" onclick="jQuery('#dialog2').slideUp()">
+      
+      <br><br>
+      <center>
+      <textarea id="data2" style="width: 90%; height: 80%"></textarea>
+      </center>
+    </div>
+    
+    
     
     
     
@@ -45,7 +61,11 @@
     <button id="save" onclick="save()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/disk.png" title="Delete"></button>
     <button id="open" onclick="opendialog()"><img src="
 http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
+<button id="importData" onclick="opendialog2()"></button>
+
 </div>
+
+
 
 
 
@@ -122,6 +142,8 @@ var sldh = window.innerHeight;
 </div>
     <br>
     
+    
+    
 
 <script>
 var penColor="grey";
@@ -129,6 +151,7 @@ var penThickness = 5;
 var skinIndex;
 var skinIndexMove;
 var newSkin;
+var labels = [];
 </script>
 
 <div id="drawing">
@@ -166,6 +189,11 @@ var newSkin;
         class="off" onclick="toggleState(this)" />
 </div>
 
+<div id = "datain">
+	<script> 
+	//in here we can also maybe put the play buttons for our linked data
+	</script>
+</div>
   
 	<script src="../buttons.js"></script>
   <script type="text/javascript" src="jquery-1.3.2.js"></script>
@@ -250,6 +278,11 @@ editor.set("fill", color.value)
     $("#data").val("")
     $("#dialog").slideDown()
   }
+	function opendialog2(){
+    $("#data").val("")
+    $("#dialog2").slideDown()
+  }
+  
   function import_shapes(){
     try{
       var json = eval("("+$("#data").val()+")");
@@ -262,6 +295,170 @@ editor.set("fill", color.value)
     }
     
   }
+	function import_data(){
+    try{
+		csvToJson();
+      $("#dialog2").slideUp();
+    }catch(err){
+      alert(err.message)
+    }
+    
+  }
+  
+  var csvRows = []; var objArr = [];
+var benchmarkStart, benchmarkParseEnd, benchmarkObjEnd, benchmarkJsonEnd, benchmarkPopulateEnd;
+
+function setMessage (message, error)
+{
+document.getElementById("message").innerHTML = '<p>' + message + '</p>';
+
+if (error)
+document.getElementById("message").className = "error";
+else
+document.getElementById("message").className = "";
+}
+
+function parseCSVLine (line)
+{
+line = line.split(',');
+
+// check for splits performed inside quoted strings and correct if needed
+for (var i = 0; i < line.length; i++)
+{
+var chunk = line[i].replace(/^[\s]*|[\s]*$/g, "");
+var quote = "";
+if (chunk.charAt(0) == '"' || chunk.charAt(0) == "'") quote = chunk.charAt(0);
+if (quote != "" && chunk.charAt(chunk.length - 1) == quote) quote = "";
+
+if (quote != "")
+{
+var j = i + 1;
+
+if (j < line.length) chunk = line[j].replace(/^[\s]*|[\s]*$/g, "");
+
+while (j < line.length && chunk.charAt(chunk.length - 1) != quote)
+{
+line[i] += ',' + line[j];
+line.splice(j, 1);
+chunk = line[j].replace(/[\s]*$/g, "");
+}
+
+if (j < line.length)
+{
+line[i] += ',' + line[j];
+line.splice(j, 1);
+}
+}
+}
+
+for (var i = 0; i < line.length; i++)
+{
+// remove leading/trailing whitespace
+line[i] = line[i].replace(/^[\s]*|[\s]*$/g, "");
+
+// remove leading/trailing quotes
+if (line[i].charAt(0) == '"') line[i] = line[i].replace(/^"|"$/g, "");
+else if (line[i].charAt(0) == "'") line[i] = line[i].replace(/^'|'$/g, "");
+}
+
+return line;
+}
+
+function csvToJson ()
+{
+  var csvRows = []; var objArr = [];
+
+var message = "";
+var error = false;
+//var f = document.forms["convertForm"];
+var csvText = document.getElementById("data2").value;
+var jsonText = "";
+
+//setMessage(message, error);
+
+if (csvText == "") { error = true; message = "Enter CSV text below."; }
+
+if (!error)
+{
+benchmarkStart = new Date();
+csvRows = csvText.split(/[\r\n]/g); // split into rows
+
+// get rid of empty rows
+for (var i = 0; i < csvRows.length; i++)
+{
+if (csvRows[i].replace(/^[\s]*|[\s]*$/g, '') == "")
+{
+csvRows.splice(i, 1);
+i--;
+}
+}
+
+if (csvRows.length < 2) { error = true; message = "The CSV text MUST have a header row!"; }
+else
+{
+objArr = [];
+
+for (var i = 0; i < csvRows.length; i++)
+{
+csvRows[i] = parseCSVLine(csvRows[i]);
+}
+for (var i = 0; i < csvRows[0].length; i++){
+labels[i] = csvRows[0][i];
+}
+
+benchmarkParseEnd = new Date();
+
+for (var i = 1; i < csvRows.length; i++)
+{
+if (csvRows[i].length > 0) objArr.push({});
+
+for (var j = 0; j < csvRows[i].length; j++)
+{
+objArr[i - 1][csvRows[0][j]] = csvRows[i][j];
+}
+}
+
+benchmarkObjEnd = new Date();
+
+jsonText = JSON.stringify(objArr, null, "\t");
+//alert(objArr[0].name);
+//alert(labels[0]);
+
+benchmarkJsonEnd = new Date();
+
+//f.elements["json"].value = jsonText;
+
+benchmarkPopulateEnd = new Date();
+
+message = getBenchmarkResults();
+}
+}
+
+//setMessage(message, error);
+
+//visualize data
+document.getElementById("datain").innerHTML = "";
+for (var i = 0; i<labels.length; i++){
+	document.getElementById("datain").innerHTML += labels[i] + "<br />";
+}
+
+}
+
+function getBenchmarkResults ()
+{
+var message = "";
+var totalTime = benchmarkPopulateEnd.getTime() - benchmarkStart.getTime();
+
+var timeDiff = (benchmarkParseEnd.getTime() - benchmarkStart.getTime()); var mostTime = "parsing CSV text";
+if ((benchmarkObjEnd.getTime() - benchmarkParseEnd.getTime()) > timeDiff) { timeDiff = (benchmarkObjEnd.getTime() - benchmarkParseEnd.getTime()); mostTime = "converting to objects"; }
+if ((benchmarkJsonEnd.getTime() - benchmarkObjEnd.getTime()) > timeDiff) { timeDiff = (benchmarkJsonEnd.getTime() - benchmarkObjEnd.getTime()); mostTime = "building JSON text"; }
+if ((benchmarkPopulateEnd.getTime() - benchmarkJsonEnd.getTime()) > timeDiff) { timeDiff = (benchmarkPopulateEnd.getTime() - benchmarkJsonEnd.getTime()); mostTime = "populating JSON text"; }
+
+message += csvRows.length + " CSV line" + (csvRows.length > 1 ? 's' : "") + " converted into " + objArr.length + " object" + (objArr.length > 1 ? 's' : "") + " in " + (totalTime / 1000) + " seconds, with an average of " + ((totalTime / 1000) / csvRows.length) + " seconds per object. Most of the time was spent on " + mostTime + ", which took " + (timeDiff / 1000) + " seconds.";
+
+return message;
+}
+  
   var attr = "cx,cy,fill,fill-opacity,font,font-family,font-size,font-weight,gradient,height,opacity,path,r,rotation,rx,ry,src,stroke,stroke-dasharray,stroke-opacity,stroke-width,width,x,y,text".split(",")
   dumpshape = function(shape){
     //return Ax.canvas.info(shape)

@@ -279,10 +279,21 @@ VectorEditor.prototype.showTracker = function(shape){
         "fill": "gray",
         "fill-opacity": 0.15
       })).mousedown(function(){
-        //drag center indicator, basically changing center of object
-       // var rect = this.paper.rect(500, 500, 50, 50).draggable();
-		//rect.draggable();
+      		this.paper.editor.action = "move"
       }));
+        //drag center indicator, basically changing center of object
+//      var omnaEl,dragData=null;
+		//alert(tracker[0]);
+    
+//     		omnaEl=tracker[0];
+//    		ev = 'mousedown';
+ 
+//            omnaEl.addEventListener('mousedown',startDrag(ev,omnaEl),false);
+//            document.body.addEventListener('mousemove',drag,false);
+//            document.body.addEventListener('mouseup',stopDrag,false);
+
+
+      
       
   
   //draw everything relative to origin (0,0) because it gets transformed later
@@ -361,4 +372,34 @@ changeCenter = function(tracker){
 	
 }
 
+
+
+
+      function startDrag(ev,omnaEl) {
+      var dragData = null;
+        if(!dragData) {
+          ev=ev||event;
+          dragData={
+            x: ev.clientX-omnaEl.offsetLeft,
+            y: ev.clientY-omnaEl.offsetTop
+          };
+        };
+      }
+      function drag(ev,omnaEl) {
+            var dragData = null;
+        if(dragData) {
+          ev=ev||event;
+          omnaEl.style.left=ev.clientX-dragData.x+"px";
+          omnaEl.style.top=ev.clientY-dragData.y+"px";
+        }
+      }
+      function stopDrag(ev,omnaEl) {
+            var dragData = null;
+        if(dragData) {
+          ev=ev||event;
+          omnaEl.style.left=ev.clientX-dragData.x+"px";
+          omnaEl.style.top=ev.clientY-dragData.y+"px";
+          dragData=null;
+        }
+      }
 
