@@ -151,7 +151,10 @@ var penThickness = 5;
 var skinIndex;
 var skinIndexMove;
 var newSkin;
+var things = [];
 var labels = [];
+var objArr = [];
+var csvRows = []; 
 </script>
 
 <div id="drawing">
@@ -190,6 +193,7 @@ var labels = [];
 </div>
 
 <div id = "datain">
+		 <button onclick="playData()" ><img src="playbutton.png" title="Play"></button>
 	<script> 
 	//in here we can also maybe put the play buttons for our linked data
 	</script>
@@ -305,7 +309,16 @@ editor.set("fill", color.value)
     
   }
   
-  var csvRows = []; var objArr = [];
+  function playData(){
+  	for (var j = 0; j < things.length; j++){
+  		for (var i = 1; i < labels.length; i++){
+  			document.getElementById("datain").innerHTML += objArr[j][labels[i]];
+  		}
+  			document.getElementById("datain").innerHTML += "<br />";
+  	}
+  }
+  
+
 var benchmarkStart, benchmarkParseEnd, benchmarkObjEnd, benchmarkJsonEnd, benchmarkPopulateEnd;
 
 function setMessage (message, error)
@@ -366,7 +379,6 @@ return line;
 
 function csvToJson ()
 {
-  var csvRows = []; var objArr = [];
 
 var message = "";
 var error = false;
@@ -402,6 +414,11 @@ for (var i = 0; i < csvRows.length; i++)
 {
 csvRows[i] = parseCSVLine(csvRows[i]);
 }
+
+for (var i = 1; i < csvRows.length; i++){
+things[i-1] = csvRows[i][0];
+}
+
 for (var i = 0; i < csvRows[0].length; i++){
 labels[i] = csvRows[0][i];
 }
@@ -422,7 +439,7 @@ benchmarkObjEnd = new Date();
 
 jsonText = JSON.stringify(objArr, null, "\t");
 //alert(objArr[0].name);
-//alert(labels[0]);
+//alert(things[0]);
 
 benchmarkJsonEnd = new Date();
 
@@ -437,9 +454,10 @@ message = getBenchmarkResults();
 //setMessage(message, error);
 
 //visualize data
-document.getElementById("datain").innerHTML = "";
-for (var i = 0; i<labels.length; i++){
-	document.getElementById("datain").innerHTML += labels[i] + "<br />";
+//what happens if they go in and change data to import? things get printed multiple times
+//document.getElementById("datain").innerHTML = "";
+for (var i = 0; i<things.length; i++){
+	document.getElementById("datain").innerHTML += things[i] + "<br />";
 }
 
 }
