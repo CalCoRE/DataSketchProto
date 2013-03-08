@@ -1,19 +1,43 @@
-<!-- SOMEBODY FIX THIS HTML -->
+<html>
 <head>
-  <title>VectorEditor</title>
-  <!-- SOMEBODY FIX THIS HTML -->
+  <title>DynInk</title>
+
 <meta name = "viewport" content = "width = device-width">
 <link rel="stylesheet" type="text/css" href="style.css">
+<script src="../buttons.js"></script>
+<script type="text/javascript" src="jquery-1.3.2.js"></script>
+<script type="text/javascript" src="raphael.js"></script>
+<script type="text/javascript" src="raphaelnew.js"></script>
+<script type="text/javascript" src="editor.js"></script>
+<script type="text/javascript" src="shape.js"></script>
+<script type="text/javascript" src="tracker.js"></script>
+<script type="text/javascript" src="linkingdata.js"></script>
+<script type="text/javascript" src="linkingshape.js"></script>
+<script type="text/javascript" src="linkinggyro.js"></script>
 </head>
+
 <body>
-  <div id="canvas" style="position: absolute;top:0;left:0; width: 100%; height: 100%; top: 0px; left: 0px;-webkit-user-select: none;"></div>
+
+<script>
+
+//these are global variable - probably a better way/place to put them, but for now this works
+var penColor="grey";
+var penThickness = 5;
+var skinIndex;
+var skinIndexMove;
+var newSkin;
+var things = [];
+var labels = [];
+var objArr = [];
+var csvRows = []; 
+</script>
+
+
+<div id="canvas" style="position: absolute;top:0;left:0; width: 100%; height: 100%; top: 0px; left: 0px;-webkit-user-select: none;"></div>
     
-    <!-- did i mention i suck at html? -->
     <div id="dialog" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
+      
       <input type="button" value="Import Shapes" onclick="import_shapes()">
-      <!--
-<input type="button" value="Close" onclick="document.getElementById('dialog').style.display='none'">
--->
       <input type="button" value="Close" onclick="jQuery('#dialog').slideUp()">
       
       <br><br>
@@ -22,50 +46,33 @@
       </center>
     </div>
     
-    <div id="dialog2" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
+<div id="dialog2" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
+      
       <input type="button" value="Import Data" onclick="import_data()">
-      <!--
-<input type="button" value="Close" onclick="document.getElementById('dialog').style.display='none'">
--->
       <input type="button" value="Close" onclick="jQuery('#dialog2').slideUp()">
       
       <br><br>
       <center>
       <textarea id="data2" style="width: 90%; height: 80%"></textarea>
       </center>
-    </div>
+</div>
     
     
-    
-    
-    
-  <div style="position: absolute; top: 10px; left: 10px; width: px"></div>
-   <!--
-<button id="select" onclick="setMode('select')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/select.gif" title="Select"></button>
-<button id="selectp"onclick="setMode('selectp')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/selectadd.gif" title="Select Add"></button>
-<button id="rect" onclick="setMode('rect')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/rectangle.gif" title="Rectangle"></button>
-<button id="line" onclick="setMode('line')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/line.gif" title="Line"></button>
-<button id="ellipse" onclick="setMode('ellipse')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/circle.gif" title="Ellipse"></button>
-<button id="path" onclick="setMode('path')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/path.gif" title="Path/Freeform"></button>
-<button id="polygon" onclick="setMode('polygon')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/polygon.gif" title="Polygon"></button>
-<button id="image" onclick="setMode('image')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/image.gif" title="Image"></button>
--->
+<div style="position: absolute; top: 10px; left: 10px; width: px"></div>
+  
 <!-- text not working new, bring back soon. -mhwj
     <button id="text" onclick="setMode('text')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/text.gif" title="Text"></button>
 -->
+
 <div id="menu">
+
     <button id="delete" onclick="setMode('delete')"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/icon/delete.gif" title="Delete"></button>
-<!--    <button onclick="alert(editor.getMarkup())"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/script_code.png" title="Markup"></button> -->
     <button onclick="if(confirm('Are you sure you want to clear the canvas?'))editor.deleteAll();"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/arrow_rotate_clockwise.png" title="Reset"></button>
-    
     <button id="save" onclick="save()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/disk.png" title="Delete"></button>
-    <button id="open" onclick="opendialog()"><img src="
-http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
-<button id="importData" onclick="opendialog2()"></button>
+    <button id="open" onclick="opendialog()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
+	<button id="importData" onclick="opendialog2()"></button>
 
 </div>
-
-
 
 
 
@@ -119,45 +126,44 @@ Manual Controls
 <td><input type="radio" name="skinInput" id="skin_z"></td>
 </tr>
 
+<tr>
+<td><input type="radio" name="xInput" id="x_none" checked></td>
+<td><input type="radio" name="xInput" id="x_x"></td>
+<td><input type="radio" name="xInput" id="x_y"></td>
+<td><input type="radio" name="xInput" id="x_z"></td>
+</tr>
+
+<tr>
+<td><input type="radio" name="yInput" id="y_none" checked></td>
+<td><input type="radio" name="yInput" id="y_x"></td>
+<td><input type="radio" name="yInput" id="y_y"></td>
+<td><input type="radio" name="yInput" id="y_z"></td>
+</tr>
+
 </table>
 	
 </form>
 </div>
-<script> 
-var sldw = window.innerWidth;
-var sldh = window.innerHeight; 
-</script>
+
 
 <div id="sliders">
 
 <form id="manips">
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="width" onchange='changeShape();'>
-  <input class="slider" type="range" min="1" max="300" step="1" value="150" id="height" onchange='changeShape();'>
-  <input class="slider" type="range" min="1" max="100" step="1" value="100" id="opacity" onchange='changeOpacity(value);'>
-  <input class="slider" type="range" min="-180" max="180" step="1" value="0" id="rotation" onchange='changeShape();'>
+  	<input class="slider" type="range" min="1" max="300" step="1" value="150" id="width" onchange='changeShape();'>
+  	<input class="slider" type="range" min="1" max="300" step="1" value="150" id="height" onchange='changeShape();'>
+  	<input class="slider" type="range" min="1" max="100" step="1" value="100" id="opacity" onchange='changeOpacity(value);'>
+  	<input class="slider" type="range" min="-180" max="180" step="1" value="0" id="rotation" onchange='changeShape();'>
 	<input class="slider" type="range" min="1" max="400" step="1" value="100" id="skin" onchange='changeSkin(value);'>
 	<input class="slider" type="range" min="-1000" max="1000" step="1" value="0" id="xchange" onchange='changeShape();'>
 	<input class="slider" type="range" min="-600" max="600" step="1" value="0" id="ychange" onchange='changeShape();'>
 </form>
+
 </div>
     <br>
     
-    
-    
-
-<script>
-var penColor="grey";
-var penThickness = 5;
-var skinIndex;
-var skinIndexMove;
-var newSkin;
-var things = [];
-var labels = [];
-var objArr = [];
-var csvRows = []; 
-</script>
 
 <div id="drawing">
+
 	 <button style="background-color:red;" onclick="colorRed(penColor)" ></button>
 	 <button style="background-color:blue;" onclick="colorBlue(penColor)" ></button>
 	 <button style="background-color:green;" onclick="colorGreen(penColor)" ></button>
@@ -169,7 +175,7 @@ var csvRows = [];
 	 <button onclick="penRegular(penThickness)" ><img src="mid.png" title="Mid"></button>
 	 <button onclick="penThick(penThickness)" ><img src="thick.png" title="Thick"></button>
 	 
-   <!-- define on/off styles -->
+   <!-- define on/off styles for drawing skins -->
      <style type="text/css">
       .on  { background:green; }
       .off { background:red; }
@@ -180,34 +186,32 @@ var csvRows = [];
         function toggleState(item){
            if(item.className == "on") {
            		newSkin = false;
-              item.className="off";
-           } else {
+              	item.className="off";
+           } 
+           else {
               item.className="on";
               newSkin = true;
            }
         }
      </script>
+     
      <!-- call 'toggleState' whenever clicked -->
-     <input type="button" id="btn" value="draw skin" 
-        class="off" onclick="toggleState(this)" />
+     <input type="button" id="btn" value="draw skin" class="off" onclick="toggleState(this)" />
 </div>
 
 <div id = "datain">
-		 <button onclick="playData()" ><img src="playbutton.png" title="Play"></button>
+
+	<button onclick="playData()" ><img src="playbutton.png" title="Play"></button>
 	<script> 
 	//in here we can also maybe put the play buttons for our linked data
 	</script>
+	
 </div>
   
-	<script src="../buttons.js"></script>
-  <script type="text/javascript" src="jquery-1.3.2.js"></script>
-  <script type="text/javascript" src="raphael.js"></script>
-    <script type="text/javascript" src="raphaelnew.js"></script>
-  <script type="text/javascript" src="editor.js"></script>
-  <script type="text/javascript" src="shape.js"></script>
-  <script type="text/javascript" src="tracker.js"></script>
-  <script type="text/javascript" src="draggable.js"></script>
-  <script type="text/javascript">
+
+<script type="text/javascript">
+
+//setting up the sketchpad
   
   function setMode(mode){
     if(mode == "text"){
@@ -221,13 +225,6 @@ var csvRows = [];
     editor.setMode(mode=='select+'?'select+':mode);
   }
 
-  /*
-function setFillColor(colors) {
-var color = colors.options[colors.selectedIndex];
-colors.style.backgroundColor = color.style.backgroundColor;
-editor.set("fill", color.value)
-}
-*/
   
   function setStrokeColor(colors) {
     var color = colors.options[colors.selectedIndex];
@@ -243,287 +240,13 @@ editor.set("fill", color.value)
   function resetForm() {
   	document.getElementById("manips").reset();
   }
-
-  //function setStrokeOpacity(widths) {
-  // var width = widths.options[widths.selectedIndex].value;
-  // editor.set("stroke-opacity",parseFloat(width))
-  //}
+ 
   
-  //function setFillOpacity(widths) {
-  // var width = widths.options[widths.selectedIndex].value;
-  // editor.set("fill-opacity",parseFloat(width))
-  //}
-
-  //function getOptionByValue(select, value)
-  //{
-  // for (var i=0; i<select.length; i++) {
-  // if (select.options[i].value == value) {
-  // return i;
-  // }
-  // }
-  // return -1;
-  //}
+</script>
   
-  
-  
-  </script>
   <script src="http://gist.github.com/raw/240659/a709989db7023efb0111ccd89e20e4f6f7e0aed3/tinyjson.js" type="text/javascript"></script>
   <script type="text/javascript">
-  //this is specifically for the save button - not interested in it right now
-  function save(){
-    $("#data").val(encode(jQuery.map(editor.shapes,dumpshape)))
-    $("#dialog").slideDown()
 
-    //for(var i = 0; i < editor.shapes.length; i++){
-    // dumpshape(editor.shapes[i])
-    //}
-  }
-    function opendialog(){
-    $("#data").val("")
-    $("#dialog").slideDown()
-  }
-	function opendialog2(){
-    $("#data").val("")
-    $("#dialog2").slideDown()
-  }
-  
-  function import_shapes(){
-    try{
-      var json = eval("("+$("#data").val()+")");
-      jQuery(json).each(function(index, item){
-        loadShape(item)
-      })
-      $("#dialog").slideUp();
-    }catch(err){
-      alert(err.message)
-    }
-    
-  }
-	function import_data(){
-    try{
-		csvToJson();
-      $("#dialog2").slideUp();
-    }catch(err){
-      alert(err.message)
-    }
-    
-  }
-  
-  function playData(){
-  	for (var j = 0; j < things.length; j++){
-  		for (var i = 1; i < labels.length; i++){
-  			document.getElementById("datain").innerHTML += objArr[j][labels[i]];
-  		}
-  			document.getElementById("datain").innerHTML += "<br />";
-  	}
-  }
-  
-
-var benchmarkStart, benchmarkParseEnd, benchmarkObjEnd, benchmarkJsonEnd, benchmarkPopulateEnd;
-
-function setMessage (message, error)
-{
-document.getElementById("message").innerHTML = '<p>' + message + '</p>';
-
-if (error)
-document.getElementById("message").className = "error";
-else
-document.getElementById("message").className = "";
-}
-
-function parseCSVLine (line)
-{
-line = line.split(',');
-
-// check for splits performed inside quoted strings and correct if needed
-for (var i = 0; i < line.length; i++)
-{
-var chunk = line[i].replace(/^[\s]*|[\s]*$/g, "");
-var quote = "";
-if (chunk.charAt(0) == '"' || chunk.charAt(0) == "'") quote = chunk.charAt(0);
-if (quote != "" && chunk.charAt(chunk.length - 1) == quote) quote = "";
-
-if (quote != "")
-{
-var j = i + 1;
-
-if (j < line.length) chunk = line[j].replace(/^[\s]*|[\s]*$/g, "");
-
-while (j < line.length && chunk.charAt(chunk.length - 1) != quote)
-{
-line[i] += ',' + line[j];
-line.splice(j, 1);
-chunk = line[j].replace(/[\s]*$/g, "");
-}
-
-if (j < line.length)
-{
-line[i] += ',' + line[j];
-line.splice(j, 1);
-}
-}
-}
-
-for (var i = 0; i < line.length; i++)
-{
-// remove leading/trailing whitespace
-line[i] = line[i].replace(/^[\s]*|[\s]*$/g, "");
-
-// remove leading/trailing quotes
-if (line[i].charAt(0) == '"') line[i] = line[i].replace(/^"|"$/g, "");
-else if (line[i].charAt(0) == "'") line[i] = line[i].replace(/^'|'$/g, "");
-}
-
-return line;
-}
-
-function csvToJson ()
-{
-
-var message = "";
-var error = false;
-//var f = document.forms["convertForm"];
-var csvText = document.getElementById("data2").value;
-var jsonText = "";
-
-//setMessage(message, error);
-
-if (csvText == "") { error = true; message = "Enter CSV text below."; }
-
-if (!error)
-{
-benchmarkStart = new Date();
-csvRows = csvText.split(/[\r\n]/g); // split into rows
-
-// get rid of empty rows
-for (var i = 0; i < csvRows.length; i++)
-{
-if (csvRows[i].replace(/^[\s]*|[\s]*$/g, '') == "")
-{
-csvRows.splice(i, 1);
-i--;
-}
-}
-
-if (csvRows.length < 2) { error = true; message = "The CSV text MUST have a header row!"; }
-else
-{
-objArr = [];
-
-for (var i = 0; i < csvRows.length; i++)
-{
-csvRows[i] = parseCSVLine(csvRows[i]);
-}
-
-for (var i = 1; i < csvRows.length; i++){
-things[i-1] = csvRows[i][0];
-}
-
-for (var i = 0; i < csvRows[0].length; i++){
-labels[i] = csvRows[0][i];
-}
-
-benchmarkParseEnd = new Date();
-
-for (var i = 1; i < csvRows.length; i++)
-{
-if (csvRows[i].length > 0) objArr.push({});
-
-for (var j = 0; j < csvRows[i].length; j++)
-{
-objArr[i - 1][csvRows[0][j]] = csvRows[i][j];
-}
-}
-
-benchmarkObjEnd = new Date();
-
-jsonText = JSON.stringify(objArr, null, "\t");
-//alert(objArr[0].name);
-//alert(things[0]);
-
-benchmarkJsonEnd = new Date();
-
-//f.elements["json"].value = jsonText;
-
-benchmarkPopulateEnd = new Date();
-
-message = getBenchmarkResults();
-}
-}
-
-//setMessage(message, error);
-
-//visualize data
-//what happens if they go in and change data to import? things get printed multiple times
-//document.getElementById("datain").innerHTML = "";
-for (var i = 0; i<things.length; i++){
-	document.getElementById("datain").innerHTML += things[i] + "<br />";
-}
-
-}
-
-function getBenchmarkResults ()
-{
-var message = "";
-var totalTime = benchmarkPopulateEnd.getTime() - benchmarkStart.getTime();
-
-var timeDiff = (benchmarkParseEnd.getTime() - benchmarkStart.getTime()); var mostTime = "parsing CSV text";
-if ((benchmarkObjEnd.getTime() - benchmarkParseEnd.getTime()) > timeDiff) { timeDiff = (benchmarkObjEnd.getTime() - benchmarkParseEnd.getTime()); mostTime = "converting to objects"; }
-if ((benchmarkJsonEnd.getTime() - benchmarkObjEnd.getTime()) > timeDiff) { timeDiff = (benchmarkJsonEnd.getTime() - benchmarkObjEnd.getTime()); mostTime = "building JSON text"; }
-if ((benchmarkPopulateEnd.getTime() - benchmarkJsonEnd.getTime()) > timeDiff) { timeDiff = (benchmarkPopulateEnd.getTime() - benchmarkJsonEnd.getTime()); mostTime = "populating JSON text"; }
-
-message += csvRows.length + " CSV line" + (csvRows.length > 1 ? 's' : "") + " converted into " + objArr.length + " object" + (objArr.length > 1 ? 's' : "") + " in " + (totalTime / 1000) + " seconds, with an average of " + ((totalTime / 1000) / csvRows.length) + " seconds per object. Most of the time was spent on " + mostTime + ", which took " + (timeDiff / 1000) + " seconds.";
-
-return message;
-}
-  
-  var attr = "cx,cy,fill,fill-opacity,font,font-family,font-size,font-weight,gradient,height,opacity,path,r,rotation,rx,ry,src,stroke,stroke-dasharray,stroke-opacity,stroke-width,width,x,y,text".split(",")
-  dumpshape = function(shape){
-    //return Ax.canvas.info(shape)
-    var info = {
-      type: shape.type,
-      id: shape.id,
-      subtype: shape.subtype
-    }
-    for(var i = 0; i < attr.length; i++){
-      var tmp = shape.attr(attr[i]);
-      if(tmp){
-        if(attr[i] == "path"){
-          tmp = tmp.toString()
-        }
-        info[attr[i]] = tmp
-      }
-    }
-    return info
-}
-
-
-  loadShape = function(shape, noattachlistener){
-    var instance = editor//instance?instance:Ax.canvas
-    if(!shape || !shape.type || !shape.id)return;
-    
-var newshape = null, draw = instance.draw;editor
-    if(!(newshape=editor.getShapeById(shape.id))){
-if(shape.type == "rect"){
-newshape = draw.rect(0, 0,0, 0)
-}else if(shape.type == "path"){
-newshape = draw.path("")
-}else if(shape.type == "image"){
-        newshape = draw.image(shape.src, 0, 0, 0, 0)
-      }else if(shape.type == "ellipse"){
-        newshape = draw.ellipse(0, 0, 0, 0)
-      }else if(shape.type == "text"){
-        newshape = draw.text(0, 0, shape.text)
-      }
-    }
-    newshape.attr(shape)
-    newshape.id = shape.id
-    newshape.subtype = shape.subtype
-
-    if (!noattachlistener) {
-      instance.addShape(newshape,true)
-    }
-}
 
 // when the document is ready, start the vectoreditor
     $(document).ready(function(){
@@ -543,167 +266,6 @@ newshape = draw.path("")
 
     })
 
-
-
-
-
-
-// Position Variables
-			var x = 0;
-			var y = 0;
-			var z = 0;
-
-			// Speed - Velocity
-			var vx = 0;
-			var vy = 0;
-			var vz = 0;
-
-			// Acceleration
-			var ax = 0;
-			var ay = 0;
-			var az = 0;
-			var ai = 0;
-			var arAlpha = 0;
-			var arBeta = 0;
-			var arGamma = 0;
-
-			var delay = 100;
-			var vMultiplier = 0.01;			var alpha = 0;
-		
-			var alpha = 0;
-			var beta = 0;
-			var gamma = 0;
-			
-			
-			if (window.DeviceMotionEvent==undefined) {
-				//document.getElementById("no").style.display="block";
-				//document.getElementById("yes").style.display="none";
-			} else {
-				window.ondevicemotion = function(event) {
-					ax = Math.round(Math.abs(event.accelerationIncludingGravity.x * 1));
-					ay = Math.round(Math.abs(event.accelerationIncludingGravity.y * 1));
-					az = Math.round(Math.abs(event.accelerationIncludingGravity.z * 1));		
-					ai = Math.round(event.interval * 100) / 100;
-					rR = event.rotationRate;
-					if (rR != null) {
-						arAlpha = Math.round(rR.alpha);
-						arBeta = Math.round(rR.beta);
-						arGamma = Math.round(rR.gamma);
-					}
-
-			
-					ax = Math.abs(event.acceleration.x * 1000);
-					ay = Math.abs(event.acceleration.y * 1000);
-					az = Math.abs(event.acceleration.z * 1000);		
-				
-				}
-								
-				window.ondeviceorientation = function(event) {
-					alpha = Math.round(event.alpha);
-					beta = Math.round(event.beta);
-					gamma = Math.round(event.gamma);
-				}				
-				
-				function d2h(d) {return d.toString(16);}
-				function h2d(h) {return parseInt(h,16);}
-				
-				/*
-				function makecolor(a, b, c) {
-					red = Math.abs(a) % 255;
-					green = Math.abs(b) % 255;
-					blue = Math.abs(c) % 255;
-					return "#" + d2h(red) + d2h(green) + d2h(blue);
-				}
-				
-				function makeacceleratedcolor(a, b, c) {
-					red = Math.round(Math.abs(a + az) % 255);
-					green = Math.round(Math.abs(b + ay) % 255);
-					blue = Math.round(Math.abs(c + az) % 255);
-					return "#" + d2h(red) + d2h(green) + d2h(blue);
-				}
- */
- 
- 				var changeEvent = function(manip, value) {
- 					switch( manip ){
- 						case 'width':
- 						changeScale()
- 						break;
- 						
- 						case 'height':
- 						changeScale()
- 						break;
- 						
- 						case 'opacity':
- 						changeOpacity(value)
- 						break;
- 						
- 						case 'rotation':
- 						changeRotation(value)
- 						break;
- 						
- 						case 'skin':
- 						changeSkin(value)
- 						break;
- 					}
- 				}
-
-				setInterval(function() {
-					document.getElementById("xlabel").innerHTML = "X: " + alpha;
-					document.getElementById("ylabel").innerHTML = "Y: " + beta;
-					document.getElementById("zlabel").innerHTML = "Z: " + gamma;		/*								
-					document.getElementById("ilabel").innerHTML = "I: " + ai;										
-					document.getElementById("arAlphaLabel").innerHTML = "arA: " + arAlpha;															
-					document.getElementById("arBetaLabel").innerHTML = "arB: " + arBeta;
-					document.getElementById("arGammaLabel").innerHTML = "arG: " + arGamma;																									
-					document.getElementById("alphalabel").innerHTML = "Alpha: " + alpha;
-					document.getElementById("betalabel").innerHTML = "Beta: " + beta;
-					document.getElementById("gammalabel").innerHTML = "Gamma: " + gamma;
-
-					document.getElementById("accelcolor").innerHTML = "Color: " + makecolor(ax, ay, az);
-					document.getElementById("accelcolor").style.background = makecolor(ax, ay, az);
-					document.getElementById("accelcolor").style.color = "#FFFFFF";
-					document.getElementById("accelcolor").style.fontWeight = "bold";
-
-					document.getElementById("gyrocolor").innerHTML = "Color: " + makecolor(alpha, beta, gamma);
-					document.getElementById("gyrocolor").style.background = makecolor(alpha, beta, gamma);
-					document.getElementById("gyrocolor").style.color = "#FFFFFF";
-					document.getElementById("gyrocolor").style.fontWeight = "bold";
-
-					document.bgColor = makecolor(arAlpha, arBeta, arGamma);
-*/
-
-
-
-					//mhwj - ok, first attempt a magic. If any of the sliders are connected to these values, update them.
-					//since the selected shape is linked to the slider, it should update too!
-					
-					var availableManips = ["width","height","opacity","rotation","skin"]
-					
-					for( i = 0 ; i < availableManips.length ; i ++ ) { // iterate through all the available manipulations
-						var currentManip = availableManips[i]
-					
-						if(!document.getElementById(currentManip+"_none").checked) { // if the width isn't none, it's something
-							if(document.getElementById(currentManip+"_x").checked) {
-								document.getElementById(currentManip).value = alpha;
-								changeEvent(currentManip, alpha);
-							} else if(document.getElementById(currentManip+"_y").checked) {
-								document.getElementById(currentManip).value = beta;
-								changeEvent(currentManip, beta);
-							} else if(document.getElementById(currentManip+"_z").checked) {
-								document.getElementById(currentManip).value = gamma;
-								changeEvent(currentManip, gamma);
-							}
-						}
-					
-					}
-					
-
-				}, delay);
-				}
-				
-				
-//			} 
-
   </script>
 </body>
-<!-- SOMEBODY FIX THIS HTML -->
+</html>

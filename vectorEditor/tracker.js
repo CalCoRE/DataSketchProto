@@ -279,7 +279,7 @@ VectorEditor.prototype.showTracker = function(shape){
         "fill": "gray",
         "fill-opacity": 0.15
       })).mousedown(function(){
-      		this.paper.editor.action = "move"
+      		//this.paper.editor.action = "move"
       }));
         //drag center indicator, basically changing center of object
 //      var omnaEl,dragData=null;
@@ -373,33 +373,4 @@ changeCenter = function(tracker){
 }
 
 
-
-
-      function startDrag(ev,omnaEl) {
-      var dragData = null;
-        if(!dragData) {
-          ev=ev||event;
-          dragData={
-            x: ev.clientX-omnaEl.offsetLeft,
-            y: ev.clientY-omnaEl.offsetTop
-          };
-        };
-      }
-      function drag(ev,omnaEl) {
-            var dragData = null;
-        if(dragData) {
-          ev=ev||event;
-          omnaEl.style.left=ev.clientX-dragData.x+"px";
-          omnaEl.style.top=ev.clientY-dragData.y+"px";
-        }
-      }
-      function stopDrag(ev,omnaEl) {
-            var dragData = null;
-        if(dragData) {
-          ev=ev||event;
-          omnaEl.style.left=ev.clientX-dragData.x+"px";
-          omnaEl.style.top=ev.clientY-dragData.y+"px";
-          dragData=null;
-        }
-      }
 
