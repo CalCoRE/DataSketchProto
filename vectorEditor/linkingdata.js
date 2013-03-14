@@ -16,14 +16,39 @@ function opendialog2(){
 
 
 function playData(){
-  	for (var j = 0; j < things.length; j++){
-  		for (var i = 1; i < labels.length; i++){
-  			document.getElementById("datain").innerHTML += objArr[j][labels[i]];
-  		}
-  		document.getElementById("datain").innerHTML += "<br />";
-  	}
+	timerCount = 1;
+	for (var i = 0; i < things.length; i++){
+		var testing = document.createElement("input");
+		testing.type = "range";
+		testing.id = "test"+i;
+		testing.min = 1;
+		testing.max = 10;
+		testing.step = 1;
+		testing.value = 1;
+		document.getElementById("datain").insertBefore(testing);
+	}
+	dataTimer = setInterval(function(){displayData()},3000);
+
 }
-  
+
+function displayData(){
+//why are sliders being set to a value of 6?
+	for (var j = 0; j < things.length; j++){
+  		document.getElementById("datain").innerHTML += objArr[j][labels[timerCount]]+ ",";
+  		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
+  	}
+  	document.getElementById("datain").innerHTML += "<br />";
+  	if (timerCount < labels.length-1){
+  		timerCount++;
+  	}
+  	else{
+  		clearInterval(dataTimer);
+  	}
+ } 
+ 
+function dataSlide(){
+	
+}
 
 
 function errorMessage (message)
