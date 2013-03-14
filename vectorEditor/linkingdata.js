@@ -27,17 +27,20 @@ function playData(){
 		testing.value = 1;
 		document.getElementById("datain").insertBefore(testing);
 	}
-	dataTimer = setInterval(function(){displayData()},3000);
+	dataTimer = setInterval(function(){displayData()},1000);
 
 }
 
 function displayData(){
-//why are sliders being set to a value of 6?
-	for (var j = 0; j < things.length; j++){
-  		document.getElementById("datain").innerHTML += objArr[j][labels[timerCount]]+ ",";
+
+// 	for (var j = 0; j < things.length; j++){
+//   		document.getElementById("datain").innerHTML += objArr[j][labels[timerCount]]+ ",";
+//   	}
+//   	document.getElementById("datain").innerHTML += "<br />";
+  	for (var j = 0; j < things.length; j++){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
   	}
-  	document.getElementById("datain").innerHTML += "<br />";
+  	
   	if (timerCount < labels.length-1){
   		timerCount++;
   	}
