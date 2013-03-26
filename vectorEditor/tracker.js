@@ -281,16 +281,7 @@ VectorEditor.prototype.showTracker = function(shape){
       })).mousedown(function(){
       		//this.paper.editor.action = "move"
       }));
-        //drag center indicator, basically changing center of object
-//      var omnaEl,dragData=null;
-		//alert(tracker[0]);
-    
-//     		omnaEl=tracker[0];
-//    		ev = 'mousedown';
- 
-//            omnaEl.addEventListener('mousedown',startDrag(ev,omnaEl),false);
-//            document.body.addEventListener('mousemove',drag,false);
-//            document.body.addEventListener('mouseup',stopDrag,false);
+
 
 
       
