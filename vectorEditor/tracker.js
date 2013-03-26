@@ -292,43 +292,14 @@ VectorEditor.prototype.showTracker = function(shape){
         "stroke-opacity": 0.5,
         "fill": "gray",
         "fill-opacity": 0.15
-<<<<<<< HEAD
-      })).mousedown(function(){
-      		//this.paper.editor.action = "move"
-      }));
-
-
-
-      
-=======
-<<<<<<< HEAD
       })));
+
   tracker[0].mousedown(function(){
   			this.paper.editor.action = "recenter"; //mhwj
         //drag center indicator, basically changing center of object
        // var rect = this.paper.rect(500, 500, 50, 50).draggable();
 		//rect.draggable();
-				});
-=======
-      })).mousedown(function(){
-      		//this.paper.editor.action = "move"
-      }));
-        //drag center indicator, basically changing center of object
-//      var omnaEl,dragData=null;
-		//alert(tracker[0]);
-    
-//     		omnaEl=tracker[0];
-//    		ev = 'mousedown';
- 
-//            omnaEl.addEventListener('mousedown',startDrag(ev,omnaEl),false);
-//            document.body.addEventListener('mousemove',drag,false);
-//            document.body.addEventListener('mouseup',stopDrag,false);
-
-
-      
->>>>>>> 331f7e4146dcc4fc8cec9363f112a58ae4e48f01
->>>>>>> center point work
-      
+				}); 
   
   //draw everything relative to origin (0,0) because it gets transformed later
   /* mhwj we aren't doing anything but path and text right now.
