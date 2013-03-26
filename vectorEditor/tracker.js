@@ -103,6 +103,7 @@ VectorEditor.prototype.updateTracker = function(tracker){
     //and am I ever gonna read this? If it's someone that's not me that's reading this
     //please tell me (if year > 2010 or otherwise)
     
+    // MHWJ eventually replace this with the position of the little center dude
     var cx = (box.x + box.width/2)
     var cy = (box.y + box.height/2)
     
@@ -116,6 +117,15 @@ VectorEditor.prototype.updateTracker = function(tracker){
     tracker.lastx = box.x//y = boxxy trollin!
     tracker.lasty = box.y
   }
+}
+
+VectorEditor.prototype.updateTrackerCenter = function(shape, newX, newY){
+	//tracker[0].translate(newX, newY);
+	//circle.transform( "T" + newX + "," + newY );
+	tx = newX - shape.attrs.cx
+	ty = newY - shape.attrs.cy
+	shape.next.transform( "T" + tx + "," + ty ); // mhwj a bit of a hack to get to the circle, but it works!
+	//circle.translate(newX, newY);
 }
 
 /* mhwj - this is cute tooltip code that might come in handy later!
@@ -271,9 +281,14 @@ VectorEditor.prototype.showTracker = function(shape){
   tracker.lasty = 0 //if zero then easier
   
   
+  // is a center defined? if not, make it the 'true' center of the bounding box
+  if( shape.attr("cx") !== undefined ) {
+  	shape.attr({cx: box.width/2, cy: box.height/2}); // relative to shape bounding box
+  }
   
   // mhwj i don't think we need the cetner indicator right ?
-  tracker.push(this.markTracker(this.draw.ellipse(box.width/2, box.height/2, 7, 7).attr({
+  
+  tracker.push(this.markTracker(this.draw.ellipse(shape.attr("cx"), shape.attr("cy"), 7, 7).attr({
         "stroke": "gray",
         "stroke-opacity": 0.5,
         "fill": "gray",
@@ -285,6 +300,13 @@ VectorEditor.prototype.showTracker = function(shape){
 
 
       
+      })));
+  tracker[0].mousedown(function(){
+  			this.paper.editor.action = "recenter"; //mhwj
+        //drag center indicator, basically changing center of object
+       // var rect = this.paper.rect(500, 500, 50, 50).draggable();
+		//rect.draggable();
+				});
       
   
   //draw everything relative to origin (0,0) because it gets transformed later
@@ -330,7 +352,7 @@ VectorEditor.prototype.showTracker = function(shape){
   }
   this.updateTracker(tracker)
 }
-
+/*
 VectorEditor.prototype.showGroupTracker = function(shape){
   var tracker = this.draw.set();
   var box = shape.getBBox();
@@ -356,10 +378,12 @@ VectorEditor.prototype.showGroupTracker = function(shape){
   
   this.updateTracker(tracker)
 }
-
-changeCenter = function(tracker){
-	//alert(tracker);
-	
+*/
+VectorEditor.prototype.updateCenter = function(shape){
+	alert(shape.attr("cx"));
+	alert(shape.next.attrs.x);
+	shape.attr({cx:shape.next.attr("cx") + 3.5, cy:shape.next.attr("cy") + 3.5});
+	alert(shape.attr("cx"));
 	
 }
 

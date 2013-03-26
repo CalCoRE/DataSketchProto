@@ -58,6 +58,7 @@ VectorEditor.prototype.getShapeById = function(v){
 VectorEditor.prototype.addShape = function(shape,no_select, no_fire){
   if(!no_fire)this.fire("addshape",shape,no_select);
   shape.node.shape_object = shape
+  // mhwj start out with a center in the center
   if(!no_select){
     this.selected = [shape]
   }

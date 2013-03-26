@@ -239,10 +239,10 @@ VectorEditor.prototype.set = function(name, value){
 VectorEditor.prototype.onMouseDown = function(x, y, target){
   this.fire("mousedown")
   this.tmpXY = this.onHitXY = [x,y]
-if(this.selected[0] != undefined && newSkin == true){
+	if(this.selected[0] != undefined && newSkin == true){
 	//make new skin instead of new object
   	var skinObject = this.selected[0];
-}	
+	}	
 
   
   //if(this.mode == "select" && !this.selectbox){
@@ -282,6 +282,10 @@ return; //die trackers die!
     // this.action = "move";
     //}
     this.offsetXY = [shape_object.attr("x") - x,shape_object.attr("y") - y]
+    } else if(target.is_tracker) {
+    	// mhwj then whatever special part of the tracker is being clicked will fire here
+    	// right now, 'recenter' will fire when you click on the small circle
+    	// the target will be the tracker object, not the shape.
     } else {
      this.unselect();
     } // if shape object is null then i didn't click on anything
@@ -464,8 +468,12 @@ VectorEditor.prototype.onMouseMove = function(x, y, target){
     	}
     	
 
-  } 
+  	} 
+  } else if( this.action == "recenter") {
+  	this.updateTrackerCenter(this.selected[0], x , y);
+  	//mhwj I'm sure there's a more elegant way than passing the ellipse and the shape, but...
   }
+  
   
   /* I'm not treating select as a mode in this version. something is automatically selected if directly clicked on.
   if(this.mode == "select"){ 
@@ -675,7 +683,7 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
       this.deleteSelection();
     }
       
-    this.action = "";
+    //
     this.mode = "path"; // mhwj - just always default back to draw mode
   
   if(this.selected.length == 1){ // if something is selected...
@@ -684,7 +692,10 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
         this.deleteShape(this.selected[0]) // if there's nothing there!
       }
     } 
-    
+    if( this.action == "recenter") {
+  		this.updateCenter(this.selected[0]);
+  	}
+    this.action = "";
     /* MHWJ - this was unselecting when you let go, we don't want that… hang out with the box if you have one.
     if(this.mode == "rect"){
       this.unselect()
