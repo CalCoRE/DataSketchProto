@@ -130,6 +130,7 @@ VectorEditor.prototype.move = function(shape, x, y){
   
   //<here's the part that isn't a hack>
   shape.translate(x,y)
+
   //</end non-hack>
   
   //HACKITY HACK HACK

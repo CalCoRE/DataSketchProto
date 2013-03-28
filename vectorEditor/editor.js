@@ -423,9 +423,13 @@ VectorEditor.prototype.onMouseMove = function(x, y, target){
   
   if(this.action == "move"){
     for(var i = 0; i < this.selected.length; i++){
-      this.move(this.selected[i], x - this.tmpXY[0], y - this.tmpXY[1])
+      this.move(this.selected[i], x - this.tmpXY[0], y - this.tmpXY[1]);
     }
+    //alert(this.tmpXY[0]);
+	document.getElementById('xchange').value = this.tmpXY[0]-500;
+	document.getElementById('ychange').value = 300-this.tmpXY[1];
     //this.moveTracker(x - this.tmpXY[0], y - this.tmpXY[1])
+
     this.updateTracker();
     this.tmpXY = [x, y];
     
