@@ -169,7 +169,14 @@ jsonText = JSON.stringify(objArr, null, "\t");
 //visualize data
 //what happens if they go in and change data to import? things get printed multiple times
 //document.getElementById("datain").innerHTML = "";
+
+$( "#datain" ).draggable();
+
+
+
+
 for (var i = 0; i<things.length; i++){
+
 	document.getElementById("datain").innerHTML += things[i] + "<br />";
 }
 
