@@ -90,7 +90,6 @@ VectorEditor.prototype.updateTracker = function(tracker){
         //tracker[1].attr({x: pathsplit[0][1]-2, y: pathsplit[0][2]-2})
         //tracker[2].attr({x: pathsplit[1][1]-2, y: pathsplit[1][2]-2})
       }
-      
       return;
     }
 
@@ -108,6 +107,8 @@ VectorEditor.prototype.updateTracker = function(tracker){
     var cy = (box.y + box.height/2)
     
     tracker.translate(box.x - tracker.lastx, box.y - tracker.lasty)
+    
+    drawrectangle(box.width, box.height, box.x, box.y);
     
     //now here for the magic
     if(shape._ && shape._.rt){
@@ -267,10 +268,13 @@ VectorEditor.prototype.newTracker = function(shape){
       this.removeTracker(this.trackers[i]);
     }
   }
-  this.showTracker(shape)
+  this.showTracker(shape);
+
 }
 
 VectorEditor.prototype.showTracker = function(shape){
+
+
   var rot_offset = -14;
   var box = shape.getBBox();
   var tracker = this.draw.set();
@@ -297,8 +301,7 @@ VectorEditor.prototype.showTracker = function(shape){
   tracker[0].mousedown(function(){
   			this.paper.editor.action = "recenter"; //mhwj
         //drag center indicator, basically changing center of object
-       // var rect = this.paper.rect(500, 500, 50, 50).draggable();
-		//rect.draggable();
+
 				}); 
   
   //draw everything relative to origin (0,0) because it gets transformed later
@@ -379,5 +382,15 @@ VectorEditor.prototype.updateCenter = function(shape){
 	
 }
 
+function drawrectangle(width, height, left, top )
+{
+	var div = document.getElementById("dropshape");
+	div.style.width=width;
+	div.style.height=height;
+	div.style.display="block";
+	div.style.top=top;
+	div.style.left=left;
+
+}
 
 

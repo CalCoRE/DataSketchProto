@@ -170,9 +170,13 @@ jsonText = JSON.stringify(objArr, null, "\t");
 //what happens if they go in and change data to import? things get printed multiple times
 //document.getElementById("datain").innerHTML = "";
 
+
 $( "#datain" ).draggable();
-
-
+ $( "#dropshape" ).droppable({
+drop: function( event, ui ) {
+alert("Hi");
+}
+});
 
 
 for (var i = 0; i<things.length; i++){
