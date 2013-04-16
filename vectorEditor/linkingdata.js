@@ -9,7 +9,7 @@ function import_data(){
 }
 
 function opendialog2(){
-    $("#data").val("")
+    $("#data2").val("")
     $("#dialog2").slideDown()
   }
 
@@ -39,6 +39,27 @@ function displayData(){
 //   	document.getElementById("datain").innerHTML += "<br />";
   	for (var j = 0; j < things.length; j++){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
+  		if (attrSelect == "opacity"){
+  			editor.selected[0].attr({opacity:objArr[j][labels[timerCount]]/100});
+  		}
+  		else if (attrSelect == "scale"){
+  			var box = editor.selected[0].getBBox();
+			var x = box.width;
+			var y = box.height;
+			var xp = box.x +x/2;
+    		var yp = box.y +y/2;
+    		var sc = "S" + objArr[j][labels[timerCount]], x, xp, yp;
+			editor.selected[0].transform(sc);
+  		}
+  		else if (attrSelect == "rotation"){
+		var box = editor.selected[0].getBBox();
+		var x = box.width;
+		var y = box.height;
+		var xp = box.x +x/2;
+    	var yp = box.y +y/2;
+    	var rt = "R"+objArr[j][labels[timerCount]], xp, yp;
+		editor.selected[0].transform(rt);
+  		}
   	}
   	
   	if (timerCount < labels.length-1){
@@ -173,15 +194,40 @@ jsonText = JSON.stringify(objArr, null, "\t");
 
 $( "#datain" ).draggable();
  $( "#dropshape" ).droppable({
-drop: function( event, ui ) {
-alert("Hi");
+drop: function( event, ui ) { 
+    $("#attrSelect").slideDown()
 }
 });
 
 
-for (var i = 0; i<things.length; i++){
 
+
+for (var i = 0; i<things.length; i++){
+	//probably going to have to dynamically make a new div for every "thing"
+// 		var labelling = document.createElement("input");
+// 		labelling.type = "div";
+// 		labelling.id = "div"+i;
+// 		labelling.min = 1;
+// 		labelling.max = 10;
+// 		labelling.step = 1;
+// 		labelling.value = 1;
+// 		document.getElementById("datain").insertBefore(labelling);
 	document.getElementById("datain").innerHTML += things[i] + "<br />";
 }
 
+}
+
+function attrScale(){
+	attrSelect = "scale";
+	$("#attrSelect").slideUp()
+}
+
+function attrRotation(){
+	attrSelect = "rotation";
+	$("#attrSelect").slideUp()
+}
+
+function attrOpacity(){
+	attrSelect = "opacity";
+	$("#attrSelect").slideUp()
 }

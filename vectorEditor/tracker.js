@@ -390,7 +390,6 @@ function drawrectangle(width, height, left, top )
 	div.style.display="block";
 	div.style.top=top;
 	div.style.left=left;
-
 }
 
 

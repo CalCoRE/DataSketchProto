@@ -33,6 +33,7 @@ var objArr = [];
 var csvRows = []; 
 var timerCount;
 var dataTimer;
+var attrSelect;
 </script>
 
 
@@ -47,6 +48,16 @@ var dataTimer;
       <center>
       <textarea id="data" style="width: 90%; height: 80%"></textarea>
       </center>
+    </div>
+    
+    <div id="attrSelect" style="position: fixed; display: none;background-color: none; width: 15%; height: 15%;top: 50%; left: 50%; z-index: 99">
+      
+      <input type="button" value="Scale" onclick="attrScale()">
+      <input type="button" value="Rotation" onclick="attrRotation()">
+      <input type="button" value="Opacity" onclick="attrOpacity()">
+      <input type="button" value="Close" onclick="jQuery('#attrSelect').slideUp()">
+      
+      
     </div>
     
 <div id="dialog2" style="position: absolute; display: none;background-color: gray; width: 90%; height: 90%;top: 20px; left: 20px; z-index: 99">
