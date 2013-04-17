@@ -40,7 +40,7 @@ function displayData(){
   	for (var j = 0; j < things.length; j++){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
   		if (attrSelect == "opacity"){
-  			editor.selected[0].attr({opacity:objArr[j][labels[timerCount]]/100});
+  			editor.selected[0].attr({opacity:objArr[draggableId][labels[timerCount]]/100});
   		}
   		else if (attrSelect == "scale"){
   			var box = editor.selected[0].getBBox();
@@ -48,7 +48,7 @@ function displayData(){
 			var y = box.height;
 			var xp = box.x +x/2;
     		var yp = box.y +y/2;
-    		var sc = "S" + objArr[j][labels[timerCount]], x, xp, yp;
+    		var sc = "S" + objArr[draggableId][labels[timerCount]], x, xp, yp;
 			editor.selected[0].transform(sc);
   		}
   		else if (attrSelect == "rotation"){
@@ -57,7 +57,7 @@ function displayData(){
 		var y = box.height;
 		var xp = box.x +x/2;
     	var yp = box.y +y/2;
-    	var rt = "R"+objArr[j][labels[timerCount]], xp, yp;
+    	var rt = "R"+objArr[draggableId][labels[timerCount]], xp, yp;
 		editor.selected[0].transform(rt);
   		}
   	}
@@ -193,26 +193,34 @@ jsonText = JSON.stringify(objArr, null, "\t");
 
 
 $( "#datain" ).draggable();
- $( "#dropshape" ).droppable({
-drop: function( event, ui ) { 
-    $("#attrSelect").slideDown()
-}
-});
+
 
 
 
 
 for (var i = 0; i<things.length; i++){
 	//probably going to have to dynamically make a new div for every "thing"
-// 		var labelling = document.createElement("input");
-// 		labelling.type = "div";
-// 		labelling.id = "div"+i;
-// 		labelling.min = 1;
-// 		labelling.max = 10;
-// 		labelling.step = 1;
-// 		labelling.value = 1;
-// 		document.getElementById("datain").insertBefore(labelling);
-	document.getElementById("datain").innerHTML += things[i] + "<br />";
+		var labelling = document.createElement("div");
+		labelling.id = "this"+i;
+		labelling.min = 1;
+		labelling.max = 10;
+		labelling.step = 1;
+		labelling.value = 1;
+		labelling.className = "dynamicDiv";
+		p = i*15;
+		labelling.style.padding = p + "px"; 
+		//document.getElementById("datain").insertBefore(labelling);
+		document.body.appendChild(labelling); 
+	document.getElementById("this"+i).innerHTML += things[i] + "<br />";
+	$("#this"+i).draggable();
+	 $( "#dropshape" ).droppable({
+drop: function( event, ui ) { 
+	draggableId = ui.draggable.attr("id");
+	draggableId = draggableId.match(/\d+$/); 
+	draggableId = parseInt(draggableId, 10);
+    $("#attrSelect").slideDown()
+}
+});
 }
 
 }
