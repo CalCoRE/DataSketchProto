@@ -39,27 +39,31 @@ function displayData(){
 //   	document.getElementById("datain").innerHTML += "<br />";
   	for (var j = 0; j < things.length; j++){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
-  		if (attrSelect == "opacity"){
-  			editor.selected[0].attr({opacity:objArr[draggableId][labels[timerCount]]/100});
+  	if (attrSelect[j] != undefined){
+  		if (attrSelect[j] == "opacity"){
+  			drop[j].attr({opacity:objArr[j][labels[timerCount]]/100});
   		}
-  		else if (attrSelect == "scale"){
-  			var box = editor.selected[0].getBBox();
+  		else if (attrSelect[j] == "scale"){
+  			var box = drop[j].getBBox();
 			var x = box.width;
 			var y = box.height;
 			var xp = box.x +x/2;
     		var yp = box.y +y/2;
-    		var sc = "S" + objArr[draggableId][labels[timerCount]], x, xp, yp;
-			editor.selected[0].transform(sc);
+    		var sc = "S" + objArr[j][labels[timerCount]], x, xp, yp;
+			drop[j].transform(sc);
+			editor.newTracker(drop[j]);
   		}
-  		else if (attrSelect == "rotation"){
-		var box = editor.selected[0].getBBox();
+  		else if (attrSelect[j] == "rotation"){
+		var box = drop[j].getBBox();
 		var x = box.width;
 		var y = box.height;
 		var xp = box.x +x/2;
     	var yp = box.y +y/2;
-    	var rt = "R"+objArr[draggableId][labels[timerCount]], xp, yp;
-		editor.selected[0].transform(rt);
+    	var rt = "R"+objArr[j][labels[timerCount]], xp, yp;
+		drop[j].transform(rt);
+		editor.newTracker(drop[j]);
   		}
+  	}
   	}
   	
   	if (timerCount < labels.length-1){
@@ -218,6 +222,8 @@ drop: function( event, ui ) {
 	draggableId = ui.draggable.attr("id");
 	draggableId = draggableId.match(/\d+$/); 
 	draggableId = parseInt(draggableId, 10);
+	drop[draggableId] = editor.selected[0];
+	
     $("#attrSelect").slideDown()
 }
 });
@@ -226,16 +232,16 @@ drop: function( event, ui ) {
 }
 
 function attrScale(){
-	attrSelect = "scale";
+	attrSelect[draggableId] = "scale";
 	$("#attrSelect").slideUp()
 }
 
 function attrRotation(){
-	attrSelect = "rotation";
+	attrSelect[draggableId] = "rotation";
 	$("#attrSelect").slideUp()
 }
 
 function attrOpacity(){
-	attrSelect = "opacity";
+	attrSelect[draggableId] = "opacity";
 	$("#attrSelect").slideUp()
 }
