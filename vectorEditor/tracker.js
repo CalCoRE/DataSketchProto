@@ -2,7 +2,9 @@ VectorEditor.prototype.unselect = function(shape){
 
   if(!shape){
     while(this.selected[0]){
-      this.unselect(this.selected[0])
+      this.unselect(this.selected[0]);
+      document.getElementById("dropshape").style.display = "none";
+      
     }
     if(shape !== false){
       this.fire("unselected")

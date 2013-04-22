@@ -41,7 +41,7 @@ function displayData(){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
   	if (attrSelect[j] != undefined){
   		if (attrSelect[j] == "opacity"){
-  			drop[j].attr({opacity:objArr[j][labels[timerCount]]/100});
+  			drop[j].attr({opacity:objArr[j][labels[timerCount]]});
   		}
   		else if (attrSelect[j] == "scale"){
   			var box = drop[j].getBBox();
@@ -61,6 +61,14 @@ function displayData(){
     	var yp = box.y +y/2;
     	var rt = "R"+objArr[j][labels[timerCount]], xp, yp;
 		drop[j].transform(rt);
+		editor.newTracker(drop[j]);
+  		}
+  		else if (attrSelect[j] == "x"){
+		drop[j].transform("T"+objArr[j][labels[timerCount]]+",0");
+		editor.newTracker(drop[j]);
+  		}
+  		else if (attrSelect[j] == "y"){
+		drop[j].transform("T0," + -objArr[j][labels[timerCount]]);;
 		editor.newTracker(drop[j]);
   		}
   	}
@@ -233,15 +241,65 @@ drop: function( event, ui ) {
 
 function attrScale(){
 	attrSelect[draggableId] = "scale";
+	var tempData = [];
+	for (var i = 1; i<labels.length; i++){
+		tempData[i-1]=objArr[draggableId][labels[i]];
+	}
+    var max = Math.max.apply(null, tempData);
+    for (var i = 1; i<labels.length; i++){
+		objArr[draggableId][labels[i]]=(tempData[i-1])/max*3;
+	}
 	$("#attrSelect").slideUp()
 }
 
 function attrRotation(){
 	attrSelect[draggableId] = "rotation";
+	var tempData = [];
+	for (var i = 1; i<labels.length; i++){
+		tempData[i-1]=objArr[draggableId][labels[i]];
+	}
+    var max = Math.max.apply(null, tempData);
+    for (var i = 1; i<labels.length; i++){
+		objArr[draggableId][labels[i]]=(tempData[i-1])/max*360;
+	}
 	$("#attrSelect").slideUp()
 }
 
 function attrOpacity(){
 	attrSelect[draggableId] = "opacity";
+	var tempData = [];
+	for (var i = 1; i<labels.length; i++){
+		tempData[i-1]=objArr[draggableId][labels[i]];
+	}
+    var max = Math.max.apply(null, tempData);
+    for (var i = 1; i<labels.length; i++){
+		objArr[draggableId][labels[i]]=(tempData[i-1])/max;
+	}
+	$("#attrSelect").slideUp()
+}
+
+function attrY(){
+	attrSelect[draggableId] = "y";
+	var tempData = [];
+	for (var i = 1; i<labels.length; i++){
+		tempData[i-1]=objArr[draggableId][labels[i]];
+	}
+    var max = Math.max.apply(null, tempData);
+    for (var i = 1; i<labels.length; i++){
+		objArr[draggableId][labels[i]]=((tempData[i-1])/max-.5)*600;
+	}
+	$("#attrSelect").slideUp()
+}
+
+function attrX(){
+	attrSelect[draggableId] = "x";
+	var tempData = [];
+	for (var i = 1; i<labels.length; i++){
+		tempData[i-1]=objArr[draggableId][labels[i]];
+	}
+    var max = Math.max.apply(null, tempData);
+    for (var i = 1; i<labels.length; i++){
+		objArr[draggableId][labels[i]]=((tempData[i-1])/max-.5)*1000;;
+	}
 	$("#attrSelect").slideUp()
 }
