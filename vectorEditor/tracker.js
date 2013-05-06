@@ -338,7 +338,8 @@ VectorEditor.prototype.showTracker = function(shape){
     //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
     this.trackers.push(tracker)
   }else if(shape.type == "path" && shape.subtype != "line"){
-    tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3}))
+  	// next line: mhwj do not draw rect, drawn as div to assign data draggable.
+    //tracker.push(this.draw.rect(-6, -6, box.width + 11, box.height + 11).attr({"opacity":0.3})) 
     //tracker.push(this.trackerBox(box.width+5,box.height+5,"resize"))  // mhwj - commented out for now
     //tracker.push(this.trackerCircle(box.width/2, rot_offset))  // mhwj - commented out for now
     this.trackers.push(tracker)
