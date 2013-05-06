@@ -269,7 +269,7 @@ Manual Controls
 
 // when the document is ready, start the vectoreditor
     $(document).ready(function(){
-      editor = new VectorEditor(document.getElementById("canvas"), '100%','100%'); //this starts everything
+      editor = new VectorEditor(document.getElementById("canvas"), $(window).width(),$(window).height()); //this starts everything
       //main function found in editor.js
       //editor.draw.rect(100,100,480,272).attr("stroke-width", 0).attr("fill", "white")
       setMode("path");
@@ -277,7 +277,7 @@ Manual Controls
     
     // when the window is resized, resize the canvas
     $(window).resize(function(){
-      editor.draw.setSize('100%','100%')
+      editor.draw.setSize($(window).width(),$(window).height())
       editor.on("select", function(event,shape){
         //shape.attr("")
       })
