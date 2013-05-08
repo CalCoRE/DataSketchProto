@@ -5,14 +5,28 @@
 <meta name = "viewport" content = "width = device-width">
 <link rel="stylesheet" type="text/css" href="style.css">
 <script src="../buttons.js"></script>
+
+<!-- libaries -->
 <script type="text/javascript" src="jquery-1.9.1.js"></script>
 <script type="text/javascript" src="jquery-ui.js"></script>
 <script type="text/javascript" src="raphaelnew.js"></script>
+
+<!-- main sketchpad function -->
 <script type="text/javascript" src="editor.js"></script>
+
+<!-- adding shapes and skins -->
 <script type="text/javascript" src="shape.js"></script>
+
+<!-- tracker for shapes -->
 <script type="text/javascript" src="tracker.js"></script>
+
+<!-- import and use csv data -->
 <script type="text/javascript" src="linkingdata.js"></script>
+
+<!-- import and save shapes  -->
 <script type="text/javascript" src="linkingshape.js"></script>
+
+<!-- using gyroscope sensors for iPad -->
 <script type="text/javascript" src="linkinggyro.js"></script>
 </head>
 
@@ -21,17 +35,26 @@
 <script>
 
 //these are global variable - probably a better way/place to put them, but for now this works
+//default pen options
 var penColor="grey";
 var penThickness = 5;
+
+//to keep track of skins
 var skinIndex;
 var skinIndexMove;
 var newSkin;
+
+//to handle imported csv data
 var things = [];
 var labels = [];
 var objArr = [];
 var csvRows = []; 
+
+//for playing data
 var timerCount;
 var dataTimer;
+
+//for dragging and dropping labels on objects
 var attrSelect = [];
 var draggableId;
 var drag = [];
@@ -271,7 +294,6 @@ Manual Controls
     $(document).ready(function(){
       editor = new VectorEditor(document.getElementById("canvas"), "100%","100%"); //this starts everything
       //main function found in editor.js
-      //editor.draw.rect(100,100,480,272).attr("stroke-width", 0).attr("fill", "white")
       setMode("path");
     })
     
@@ -279,7 +301,7 @@ Manual Controls
     $(window).resize(function(){
       editor.draw.setSize("100%","100%")
       editor.on("select", function(event,shape){
-        //shape.attr("")
+       
       })
       
 

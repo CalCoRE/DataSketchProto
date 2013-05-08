@@ -393,16 +393,12 @@ return; //die trackers die!
 			this.drawing = shape;
       	}
       	else{
-      		alert("error, out of skins");
+      		alert("error, out of skins"); //max 3 skins for every object
       	}
 		}
 	  }
 
 
-// 		this.skins[skinIndex] = shape;
-
-		//shape.hide();
-		//alert(this.skins[0].attr("path"));
       }
     }
   }
@@ -425,8 +421,8 @@ VectorEditor.prototype.onMouseMove = function(x, y, target){
     for(var i = 0; i < this.selected.length; i++){
       this.move(this.selected[i], x - this.tmpXY[0], y - this.tmpXY[1]);
     }
-    //alert(this.tmpXY[0]);
-	document.getElementById('xchange').value = this.tmpXY[0]-500;
+    //change x and y sliders as you drag object
+	document.getElementById('xchange').value = this.tmpXY[0]-500; 
 	document.getElementById('ychange').value = 300-this.tmpXY[1];
     //this.moveTracker(x - this.tmpXY[0], y - this.tmpXY[1])
 
@@ -434,7 +430,7 @@ VectorEditor.prototype.onMouseMove = function(x, y, target){
     this.tmpXY = [x, y];
     
     //now we want to move all the skins with it
-    //TO DO: make a find skinIndex function - eliminate repeating code
+    //TO DO: make a find skinIndex function - eliminate repeating code (but must deal with passing variables then)
     var centerObject= this.selected[0];
     centerBox = centerObject.getBBox();
     skinIndexMove = undefined; 
@@ -618,6 +614,7 @@ VectorEditor.prototype.getMarkup = function(){
 }
 
 
+//not sure what this does?
 VectorEditor.prototype.onDblClick = function(x, y, target){
   this.fire("dblclick")
   if(this.selected.length == 1){
@@ -639,7 +636,7 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
   this.onGrabXY = null;
   
   if(this.drawing != null && skinIndex != undefined){
-  	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin()
+  	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin() - made it a global variable for now
   	if( ! (this.drawing.getBBox().height == 0 && this.drawing.getBBox().width == 0 )){ // if there's actually something drawn
       hideThings();
 	centerBox = this.shapes[skinIndex].getBBox();

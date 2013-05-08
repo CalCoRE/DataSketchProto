@@ -95,14 +95,6 @@ VectorEditor.prototype.updateTracker = function(tracker){
       return;
     }
 
-    //i wish my code could be as dated as possible by referencing pieces of culture
-    //though I *hope* nobody needs to use svg/vml whatever in the near future
-    //there coudl be a lot of better things
-    //and svg-edit is a better project
-    //so if the future even uses raphael, then microsoft really sucks
-    //it truly is "more evil than satan himself" which is itself dated even for the time of writing
-    //and am I ever gonna read this? If it's someone that's not me that's reading this
-    //please tell me (if year > 2010 or otherwise)
     
     // MHWJ eventually replace this with the position of the little center dude
     var cx = (box.x + box.width/2)
@@ -110,6 +102,7 @@ VectorEditor.prototype.updateTracker = function(tracker){
     
     tracker.translate(box.x - tracker.lastx, box.y - tracker.lasty)
     
+    //make tracker by creating HMTL div object
     drawrectangle(box.width, box.height, box.x, box.y);
     
     //now here for the magic
@@ -385,6 +378,7 @@ VectorEditor.prototype.updateCenter = function(shape){
 	
 }
 
+//with this function, our tracker is now an HTML div object and can be made "droppable" by the jQuery UI library 
 function drawrectangle(width, height, left, top )
 {
 	var div = document.getElementById("dropshape");

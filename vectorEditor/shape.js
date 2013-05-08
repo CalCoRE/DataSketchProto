@@ -476,7 +476,3 @@ centerSkinMove = function(){
     }
     editor.updateTracker()
 }
-// editor.customAttributes.skin = function() {
-//  	alert(editor.selected[0].attr("path"));
-//     return {path: editor.selected[0].attr("path")};
-// };

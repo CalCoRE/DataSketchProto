@@ -1,3 +1,4 @@
+//called by button
 function import_data(){
     try{
 		csvToJson();
@@ -33,10 +34,6 @@ function playData(){
 
 function displayData(){
 
-// 	for (var j = 0; j < things.length; j++){
-//   		document.getElementById("datain").innerHTML += objArr[j][labels[timerCount]]+ ",";
-//   	}
-//   	document.getElementById("datain").innerHTML += "<br />";
   	for (var j = 0; j < things.length; j++){
   		document.getElementById("test"+j).value = objArr[j][labels[timerCount]];
   	if (attrSelect[j] != undefined){
@@ -82,9 +79,6 @@ function displayData(){
   	}
  } 
  
-function dataSlide(){
-	
-}
 
 
 function errorMessage (message)
@@ -201,17 +195,10 @@ jsonText = JSON.stringify(objArr, null, "\t");
 
 //visualize data
 //what happens if they go in and change data to import? things get printed multiple times
-//document.getElementById("datain").innerHTML = "";
-
-
-$( "#datain" ).draggable();
-
-
-
 
 
 for (var i = 0; i<things.length; i++){
-	//probably going to have to dynamically make a new div for every "thing"
+	//dynamically make a new div for every "thing"
 		var labelling = document.createElement("div");
 		labelling.id = "this"+i;
 		labelling.min = 1;
@@ -221,7 +208,6 @@ for (var i = 0; i<things.length; i++){
 		labelling.className = "dynamicDiv";
 		p = i*15;
 		labelling.style.padding = p + "px"; 
-		//document.getElementById("datain").insertBefore(labelling);
 		document.body.appendChild(labelling); 
 	document.getElementById("this"+i).innerHTML += things[i] + "<br />";
 	$("#this"+i).draggable();
@@ -238,6 +224,8 @@ drop: function( event, ui ) {
 }
 
 }
+
+//next set of functions are called by dropdown menu attrSelect and calibrate the imported csv data
 
 function attrScale(){
 	attrSelect[draggableId] = "scale";
