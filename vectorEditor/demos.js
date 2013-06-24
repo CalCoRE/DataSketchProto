@@ -3,6 +3,9 @@ function skinsDemo(){
 $("#skinstart").slideDown();
 $("#skinstart").accordion();
 $("#skinstart").css("display", "block");
+
+//when user has completed task, use listener to move accordion to next step
+//$( "#skinstart" ).accordion( "option", "active", 2 );
 	//draw unopened flower as object
 	
 	//add 3 growing stages of flower as skins
