@@ -666,7 +666,7 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
   if(this.skins.length == 2 && this.selected.length == 0){
   	$( "#skinstart" ).accordion( "option", "active", 5 );
   }
-  if(this.skins2.length == 2){
+  if(this.skins2.length == 2 && this.selected.length == 0){
   	$( "#skinstart" ).accordion( "option", "active", 6 );
   }
   
