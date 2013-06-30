@@ -6,18 +6,21 @@ function import_data(){
     }catch(err){
       alert(err.message)
     }
-    
+    $( "#datastart" ).accordion( "option", "active", 4 );
+
 }
 
 function opendialog2(){
     $("#data2").val("")
     $("#dialog2").slideDown()
+    $( "#datastart" ).accordion( "option", "active", 3 );
   }
 
 
 
 function playData(){
 	timerCount = 1;
+	var sp2 = document.getElementById("childElement");
 	for (var i = 0; i < things.length; i++){
 		var testing = document.createElement("input");
 		testing.type = "range";
@@ -26,7 +29,7 @@ function playData(){
 		testing.max = 10;
 		testing.step = 1;
 		testing.value = 1;
-		document.getElementById("datain").insertBefore(testing);
+		document.getElementById("datain").insertBefore(testing, sp2);
 	}
 	dataTimer = setInterval(function(){displayData()},1000);
 
@@ -228,6 +231,7 @@ drop: function( event, ui ) {
 //next set of functions are called by dropdown menu attrSelect and calibrate the imported csv data
 
 function attrScale(){
+    $( "#datastart" ).accordion( "option", "active", 5 );
 	attrSelect[draggableId] = "scale";
 	var tempData = [];
 	for (var i = 1; i<labels.length; i++){
@@ -241,6 +245,7 @@ function attrScale(){
 }
 
 function attrRotation(){
+    $( "#datastart" ).accordion( "option", "active", 5 );
 	attrSelect[draggableId] = "rotation";
 	var tempData = [];
 	for (var i = 1; i<labels.length; i++){
@@ -254,6 +259,7 @@ function attrRotation(){
 }
 
 function attrOpacity(){
+    $( "#datastart" ).accordion( "option", "active", 5 );
 	attrSelect[draggableId] = "opacity";
 	var tempData = [];
 	for (var i = 1; i<labels.length; i++){
@@ -267,6 +273,7 @@ function attrOpacity(){
 }
 
 function attrY(){
+    $( "#datastart" ).accordion( "option", "active", 5 );
 	attrSelect[draggableId] = "y";
 	var tempData = [];
 	for (var i = 1; i<labels.length; i++){
@@ -280,6 +287,7 @@ function attrY(){
 }
 
 function attrX(){
+    $( "#datastart" ).accordion( "option", "active", 5 );
 	attrSelect[draggableId] = "x";
 	var tempData = [];
 	for (var i = 1; i<labels.length; i++){

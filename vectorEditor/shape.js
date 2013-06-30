@@ -226,6 +226,7 @@ changeShape = function(){
 	editor.selected[0].transform(sc+rt+cs+xc+yc);
 	}
 	editor.newTracker(editor.selected[0])
+	$( "#skinstart" ).accordion( "option", "active", 8 );
 }
 
 changeX = function(value){

@@ -632,8 +632,12 @@ VectorEditor.prototype.onDblClick = function(x, y, target){
 
 
 VectorEditor.prototype.onMouseUp = function(x, y, target){
+
+
+  
   this.fire("mouseup")
   this.onGrabXY = null;
+  
   
   if(this.drawing != null && skinIndex != undefined){
   	//need to somehow pass it the skinIndex we're on to both hideThings() and centerSkin() - made it a global variable for now
@@ -652,6 +656,24 @@ VectorEditor.prototype.onMouseUp = function(x, y, target){
   // MHWJ if i'm drawing, stop it
   this.drawing = null;
   
+  //For Skins demo
+  if(this.shapes.length == 2 && this.selected.length == 0 && this.skins.length == 0){
+  	$( "#skinstart" ).accordion( "option", "active", 2 );
+  }	
+  if(this.shapes.length == 2 && this.selected.length == 1 && this.skins.length == 0){
+  	$( "#skinstart" ).accordion( "option", "active", 4 );
+  }
+  if(this.skins.length == 2 && this.selected.length == 0){
+  	$( "#skinstart" ).accordion( "option", "active", 5 );
+  }
+  if(this.skins2.length == 2){
+  	$( "#skinstart" ).accordion( "option", "active", 6 );
+  }
+  
+  //For Data demo
+  if(this.shapes.length > 2 && this.selected.length == 0){
+  	$( "#datastart" ).accordion( "option", "active", 2 );
+  }
   /*
   //if(this.mode == "select" || this.mode == "delete"){ // now we want select stuff to happen automagically
   //  if(this.selectbox){ // also we are not using select boxes right now, if so this is useful

@@ -231,10 +231,12 @@ Manual Controls
            if(item.className == "on") {
            		newSkin = false;
               	item.className="off";
+              	$( "#skinstart" ).accordion( "option", "active", 7 );
            } 
            else {
               item.className="on";
               newSkin = true;
+              $( "#skinstart" ).accordion( "option", "active", 3 );
            }
         }
      </script>
@@ -246,6 +248,7 @@ Manual Controls
 <div id = "datain">
 
 	<button onclick="playData()" ><img src="playbutton.png" title="Play"></button> 
+	<span id="childElement"></span>
 	
 </div>
 
@@ -278,7 +281,7 @@ Manual Controls
 <h3>Section 6</h3>
 <div>When you're done drawing skins, turn off the skins button by clicking it again. It should turn red.</div>
 <h3>Section 7</h3>
-<div>See your skins by moving the skins slider around, which is located in the bottom right.</div>
+<div>See your skins by selecting your object and moving the skins slider around, which is located in the bottom right.</div>
 <h3>Section 8</h3>
 <div>Notice if you draw any of your flower stages around, all of the different stages you drew will follow.</div>
 </div>
@@ -290,17 +293,10 @@ Manual Controls
 	    
 <h3><input type="button" value="Close" onclick="jQuery('#datastart').slideUp()"></h3>
 <div>DATA DEMO</div>
-
-	//load in csv data
-	
-	//drag and drop labels on objects
-	
-	//play data
-
 <h3>Section 1</h3>
-<div>For this demo, make sure you have drawn a few objects. We will be loading in data and assigning it to your objects.</div>
+<div>For this demo, make sure you have drawn at least 3 objects. We will be loading in data and assigning it to your objects. If you haven't drawn any objects, draw three now.</div>
 <h3>Section 2</h3>
-<div>Click the bottom button in the top right menu that says 'data'. Copy and past your csv data here. Here is some sample data you can copy and paste for this demo.
+<div>Click the bottom button in the top right menu that says 'data'. Copy and past your csv data there. Here is some sample data you can copy and paste for this demo.
 Name, a, b, c, d, e
 Mom, 1, 3, 5, 6, 4
 Dad, 64, 30, 2, 2, 2

@@ -3,16 +3,8 @@ function skinsDemo(){
 $("#skinstart").slideDown();
 $("#skinstart").accordion();
 $("#skinstart").css("display", "block");
+$( "#skinstart" ).accordion( "option", "active", 1 );
 
-//when user has completed task, use listener to move accordion to next step
-//$( "#skinstart" ).accordion( "option", "active", 2 );
-	//draw unopened flower as object
-	
-	//add 3 growing stages of flower as skins
-	
-	//use slider to see the flower open and close
-	
-	//drag objects and skins all together
 }
 
 function dataDemo(){
@@ -20,10 +12,8 @@ function dataDemo(){
 $("#datastart").slideDown();
 $("#datastart").accordion();
 $("#datastart").css("display", "block");
-
-	//load in csv data
-	
-	//drag and drop labels on objects
-	
-	//play data
+$( "#datastart" ).accordion( "option", "active", 1 );
+if(editor.shapes.length > 2){
+	$( "#datastart" ).accordion( "option", "active", 2 );
+}
 }
