@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>DynInk</title>
+  <title>DataSketch</title>
 
 <meta name = "viewport" content = "width = device-width">
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -31,6 +31,9 @@
 
 <!-- demos-->
 <script type="text/javascript" src="demos.js"></script>
+
+<!-- fonts -->
+<link href='http://fonts.googleapis.com/css?family=Indie+Flower|Open+Sans:400,300' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
@@ -80,12 +83,14 @@ var drop = [];
     
     <div id="attrSelect" style="position: fixed; display: none;background-color: none; width: 15%; height: 15%;top: 50%; left: 50%; z-index: 99">
       
-      <input type="button" value="Scale" onclick="attrScale()">
+      <input type="button" value="Width" onclick="attrScale()">
+      <input type="button" value="Height" onclick="attrScale()">
       <input type="button" value="Rotation" onclick="attrRotation()">
       <input type="button" value="Opacity" onclick="attrOpacity()">
-      <input type="button" value="Y Value" onclick="attrY()">
-      <input type="button" value="X Value" onclick="attrX()">
-      <input type="button" value="Close" onclick="jQuery('#attrSelect').slideUp()">
+      <input type="button" value="X Position" onclick="attrX()">
+      <input type="button" value="Y Position" onclick="attrY()">
+      <input type="button" value="Make Copies" onclick="attrY()">
+      <input type="button" value="Cancel" onclick="jQuery('#attrSelect').slideUp()">
       
       
     </div>
@@ -114,12 +119,13 @@ var drop = [];
     <button onclick="if(confirm('Are you sure you want to clear the canvas?'))editor.deleteAll();"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/arrow_rotate_clockwise.png" title="Reset"></button>
     <button id="save" onclick="save()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/disk.png" title="Delete"></button>
     <button id="open" onclick="opendialog()"><img src="http://ajaxanimator.googlecode.com/svn/trunk/ajaxanimator/img/silk/folder_go.png" title="Open"></button>
-	<button id="importData" onclick="opendialog2()"></button>
+	<button id="importData" onclick="opendialog2()"><img src="csv.png" title="CSVData"></button>
+	<button id="" onclick=""><img src="accel.png" title="Accelerometer"></button>
 
 </div>
 
 
-
+<!--
 <div id="motion">
 Manual Controls
 <form id="motions">
@@ -187,9 +193,9 @@ Manual Controls
 </table>
 	
 </form>
-</div>
+</div>-->
 
-
+<!--
 <div id="sliders">
 
 <form id="manips">
@@ -202,7 +208,7 @@ Manual Controls
 	<input class="slider" type="range" min="-600" max="600" step="1" value="0" id="ychange" onchange='changeShape();'>
 </form>
 
-</div>
+</div>-->
     <br>
     
 
@@ -241,8 +247,8 @@ Manual Controls
         }
      </script>
      
-     <!-- call 'toggleState' whenever clicked -->
-     <input type="button" id="btn" value="draw skin" class="off" onclick="toggleState(this)" />
+     <!-- call 'toggleState' whenever clicked 
+     <input type="button" id="btn" value="draw skin" class="off" onclick="toggleState(this)" />-->
 </div>
 
 <div id = "datain">
@@ -257,9 +263,9 @@ Manual Controls
 </div>
 
 <div id = "demos" >
-
-	<button onclick="skinsDemo()" >Skins Demo </button> 
-	<button onclick="dataDemo()" >Data Demo </button> 
+    <div id="logo">DataSketch</div>
+	<button class="demobutton" onclick="skinsDemo()" >Skins Demo </button> 
+	<button class="demobutton" onclick="dataDemo()" >Data Demo </button> 
 	
 </div>
 
